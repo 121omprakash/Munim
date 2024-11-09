@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Munim - Register</title>
+    <link rel="icon" href="https://121omprakash.github.io/UI_UX/munim.png" type="image/png">
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body, html {
+            height: 100%;
+            font-family: 'Arial', sans-serif;
+            color: #333;
+            line-height: 1.6;
+            overflow-x: hidden;
+            background-color: #f4f4f4;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* Hero Section with Money Video Background */
+        .hero {
+            height: 100vh;
+            position: relative;
+            background: linear-gradient(to right, #32c8a7, #2f3e46);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .hero video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.3;
+        }
+
+        .hero h1 {
+            font-size: 3em;
+            font-weight: bold;
+            margin-bottom: 20px;
+            opacity: 0;
+            animation: fadeIn 2s forwards 0.5s;
+        }
+
+        .hero p {
+            font-size: 1.1em;
+            max-width: 600px;
+            margin-bottom: 30px;
+            opacity: 0;
+            animation: fadeIn 2s forwards 1s;
+        }
+
+        /* Register Form */
+        .register-container {
+            background-color: white;
+            width: 100%;
+            max-width: 450px;
+            padding: 40px;
+            margin: 50px auto;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            animation: fadeIn 2s forwards 2s;
+            max-height: 80vh; /* Set a maximum height for the form container */
+            overflow-y: auto; /* Make the form scrollable */
+        }
+
+        .register-container h1 {
+            text-align: center;
+            font-size: 2.5em;
+            color: #32c8a7;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            color: #000; /* Change label font color to black */
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            font-size: 1em;
+            transition: border 0.3s ease;
+        }
+
+        .input-field:focus {
+            border-color: #32c8a7;
+            outline: none;
+        }
+
+        .register-button {
+            width: 100%;
+            padding: 15px;
+            background-color: #32c8a7;
+            color: white;
+            font-size: 1.2em;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .register-button:hover {
+            background-color: #28a095;
+        }
+
+        .back-to-login {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .back-to-login a {
+            color: #32c8a7;
+            font-size: 1em;
+        }
+
+        /* Dark Mode */
+        .dark-mode {
+            background-color: #1c1c1c;
+            color: white;
+        }
+
+        .dark-mode .hero {
+            background: linear-gradient(to right, #2c3e50, #34495e);
+        }
+
+        .dark-mode .register-button {
+            background-color: #e74c3c;
+        }
+
+        .dark-mode .input-field {
+            border-color: #444;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Responsive Design */
+        @media screen and (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5em;
+            }
+
+            .hero p {
+                font-size: 1em;
+            }
+
+            .register-container {
+                padding: 20px;
+            }
+
+            .register-button {
+                padding: 12px;
+                font-size: 1em;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Hero Section with Money Video Background -->
+    <section class="hero">
+        <video autoplay muted loop>
+            <source src="/munim-landing-page/money.mp4" type="video/mp4">
+        </video>
+        <h1>Join Munim Today</h1>
+        <p>Sign up and take control of your finances with ease.</p>
+    
+        <!-- Registration Form -->
+        <div class="register-container">
+            <h1>Create Your Account</h1>
+            <form>
+                <!-- Personal Information -->
+                <div class="form-group">
+                    <label for="full-name">Full Name</label>
+                    <input type="text" class="input-field" id="full-name" placeholder="Full Name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" class="input-field" id="email" placeholder="Email Address" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" class="input-field" id="password" placeholder="Password" required>
+                </div>
+                <div class="form-group">
+                    <label for="confirm-password">Confirm Password</label>
+                    <input type="password" class="input-field" id="confirm-password" placeholder="Confirm Password" required>
+                </div>
+                
+                <!-- Expense-related Information -->
+                <div class="form-group">
+                    <label for="phone">Phone Number (Optional)</label>
+                    <input type="text" class="input-field" id="phone" placeholder="Phone Number (Optional)">
+                </div>
+                <div class="form-group">
+                    <label for="city">City</label>
+                    <input type="text" class="input-field" id="city" placeholder="City" required>
+                </div>
+                <div class="form-group">
+                    <label for="occupation">Occupation (Optional)</label>
+                    <input type="text" class="input-field" id="occupation" placeholder="Occupation (Optional)">
+                </div>
+                
+                <div class="form-group">
+                    <label for="currency">Currency</label>
+                    <select id="currency" class="input-field">
+                        <option value="USD">USD</option>
+                        <option value="INR">INR</option>
+                        <option value="EUR">EUR</option>
+                        <option value="GBP">GBP</option>
+                        <!-- Add more currencies if needed -->
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="category">Default Expense Category</label>
+                    <select id="category" class="input-field">
+                        <option value="food">Food</option>
+                        <option value="transportation">Transportation</option>
+                        <option value="entertainment">Entertainment</option>
+                        <option value="shopping">Shopping</option>
+                    </select>
+                </div>
+    
+                <button type="submit" class="register-button">Register</button>
+            </form>
+    
+            <!-- Back to Login Link -->
+            <div class="back-to-login">
+                <p style="color: #000;">Already have an account? <a href="login.html">Login here</a></p>
+            </div>
+        </div>
+    
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer" style="text-align: center; padding: 20px; background-color: #222; color: white;">
+        <p>&copy; 2024 Munim. All rights reserved.</p>
+    </footer>
+
+    <!-- FontAwesome (for social icons) -->
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+
+
+    <script>
+        // JavaScript function to handle login and redirect to dashboard
+        document.getElementById('login-form').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent form from submitting
+
+            // Get the email and password from the input fields
+            var email = document.getElementById('email').value;
+            var password = document.getElementById('password').value;
+
+            // Check if all fields are filled
+            if (email !== '' && password !== '') {
+                // Redirect to dashboard if all fields are filled
+                window.location.href = 'dashboard.html';
+            } else {
+                // If any field is empty, alert the user
+                alert('Please fill in all fields.');
+            }
+        });
+    </script>
+</body>
+</html>

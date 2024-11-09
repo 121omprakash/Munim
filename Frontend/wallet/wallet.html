@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wallet</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Arial', sans-serif;
+    }
+
+    body {
+      display: flex;
+      min-height: 100vh;
+      background-color: #f5f5f5;
+    }
+
+    .sidebar {
+      width: 20%;
+      background-color: #FDEAEF;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .sidebar h2 {
+      display: flex;
+      align-items: center;
+      color: #333;
+      margin-bottom: 2rem;
+    }
+
+    .sidebar h2 img {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      margin-right: 10px;
+    }
+
+    .sidebar button {
+      display: flex;
+      align-items: center;
+      margin-bottom: 1rem;
+      background: none;
+      border: none;
+      padding: 10px 15px;
+      width: 100%;
+      text-align: left;
+      font-size: 1rem;
+      color: #ff6347;
+      cursor: pointer;
+      border-radius: 6px;
+    }
+
+    .sidebar button i {
+      margin-right: 10px;
+    }
+
+    .sidebar button:hover {
+      background-color: #ffddc1;
+    }
+
+    .main-content {
+      width: 80%;
+      padding: 2rem;
+      background-color: #fff;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .header img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+    }
+
+    /* Wallet Balance Section */
+    .wallet-balance {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+    }
+
+    .wallet-balance h3 {
+      font-size: 1.8rem;
+      color: #333;
+    }
+
+    .wallet-balance .amount {
+      font-size: 2rem;
+      color: #ff6347;
+    }
+
+    .wallet-balance button {
+      padding: 10px 20px;
+      background-color: #ff6347;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .wallet-balance button:hover {
+      background-color: #e55340;
+    }
+
+    .recent-transactions {
+      margin-bottom: 2rem;
+    }
+
+    .recent-transactions h3 {
+      margin-bottom: 1rem;
+    }
+
+    .transactions-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .transactions-table th, .transactions-table td {
+      padding: 10px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .transactions-table th {
+      background-color: #ffddc1;
+    }
+
+    /* Dark/Light Mode Styles */
+    body.dark-mode {
+      background-color: #1e1e1e;
+      color: #e0e0e0;
+    }
+
+    body.dark-mode .sidebar {
+      background-color: #5a4e4e;
+      color: #e55340;
+    }
+
+    body.dark-mode .main-content {
+      background-color: #2e2e2e;
+    }
+
+    body.dark-mode .wallet-balance h3 {
+      color: #e0e0e0;
+    }
+
+    body.dark-mode .wallet-balance .amount {
+      color: #e93d3d;
+    }
+
+
+    body.dark-mode .transactions-table th {
+      background-color: #e93d3d;
+    }
+
+    body.dark-mode .transactions-table td {
+      background-color: #3c3c3c;
+      color: #e0e0e0;
+    }
+
+    /* Mode Toggle Button */
+    .mode-toggle {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      background-color: #f0f0f0;
+      border: none;
+      padding: 10px;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+
+    .mode-toggle img {
+      width: 24px;
+      height: 24px;
+    }
+
+    /* Sign Out Button */
+    .sign-out {
+      position: absolute;
+      bottom: 80px;
+      left: 20px;
+      background-color: #ff6347;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+
+    .sign-out:hover {
+      background-color: #e55340;
+    }
+
+  </style>
+</head>
+<body>
+
+  <div class="sidebar">
+    <h2><img src="munim.webp" alt="Logo"> Munim</h2>
+    <button onclick="window.location.href='/../Frontend/Dashboard/dashboard.html'"><i class="fas fa-tachometer-alt"></i>Dashboard</button>
+    <button onclick="window.location.href='/../Frontend/Transactions/Transaction.html'"><i class="fas fa-exchange-alt"></i>Transactions</button>
+    <button style="background-color:#ffddc1;"" onclick="window.location.href='/../Frontend/wallet/wallet.html'"><i class="fas fa-wallet"></i>Wallet</button>
+    <button onclick="window.location.href='/../Frontend/Goals/Goals.html'"><i class="fas fa-bullseye"></i>Goals</button>
+    <button onclick="window.location.href='/../Frontend/Analytics/analytics.html'"><i class="fas fa-chart-pie"></i>Analytics</button>
+    <button onclick="window.location.href='/../Frontend/Budget/budget.html'"><i class="fas fa-balance-scale"></i>Budget</button>
+    <button onclick="window.location.href='/../Frontend/Setting/setting.html'"><i class="fas fa-cog"></i>Settings</button>
+  </div>
+
+  <!-- Dark/Light Mode Toggle -->
+  <button id="darkModeToggle" class="mode-toggle">
+    <img src="dark.png" alt="Dark/Light Mode" width="30px">
+  </button>
+
+  <!-- Sign Out Button -->
+  <button id="signOutBtn" class="sign-out">
+    Sign Out
+  </button>
+
+  <div class="main-content">
+    <div class="header">
+      <h1>Welcome, Ashish Singh</h1>
+      <img src="profile.png" alt="Profile Picture">
+    </div>
+    
+    <!-- Wallet Balance Section -->
+    <div class="wallet-balance">
+      <div>
+        <h3>Current Balance</h3>
+        <p class="amount">$5,000</p>
+      </div>
+      <button>Deposit Funds</button>
+    </div>
+
+    <!-- Recent Transactions Section -->
+    <div class="recent-transactions">
+      <h3>Recent Transactions</h3>
+      <table class="transactions-table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Date</th>
+            <th>Amount</th>
+            <th>Method</th>
+            <th>Category</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Amazon</td>
+            <td>03/10/24</td>
+            <td>$120</td>
+            <td>Debit Card</td>
+            <td>Shopping</td>
+          </tr>
+          <tr>
+            <td>Netflix</td>
+            <td>02/10/24</td>
+            <td>$15</td>
+            <td>Credit Card</td>
+            <td>Subscription</td>
+          </tr>
+          <tr>
+            <td>Spotify</td>
+            <td>01/10/24</td>
+            <td>$10</td>
+            <td>UPI</td>
+            <td>Subscription</td>
+          </tr>
+          <tr>
+            <td>School Fee</td>
+            <td>30/09/24</td>
+            <td>$200</td>
+            <td>Cash</td>
+            <td>Education</td>
+          </tr>
+          <tr>
+            <td>Rent</td>
+            <td>25/09/24</td>
+            <td>$1,000</td>
+            <td>UPI</td>
+            <td>Rent</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Chart.js Library -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <!-- Dark/Light Mode Toggle Script -->
+  <script>
+    const darkModeToggle = document.getElementById('darkModeToggle');
+    darkModeToggle.addEventListener('click', () => {
+      document.body.classList.toggle('dark-mode');
+    });
+
+    // Save user preference in localStorage
+    if (localStorage.getItem('dark-mode') === 'enabled') {
+      document.body.classList.add('dark-mode');
+    }
+
+    darkModeToggle.addEventListener('click', () => {
+      if (document.body.classList.contains('dark-mode')) {
+        localStorage.setItem('dark-mode', 'enabled');
+      } else {
+        localStorage.setItem('dark-mode', 'disabled');
+      }
+    });
+  </script>
+</body>
+</html>

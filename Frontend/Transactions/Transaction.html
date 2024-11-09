@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wallet Transactions</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Arial', sans-serif;
+    }
+
+    body {
+      display: flex;
+      min-height: 100vh;
+      background-color: #f5f5f5;
+    }
+
+    .sidebar {
+      width: 19%;
+      background-color: #FDEAEF;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .sidebar h2 {
+      display: flex;
+      align-items: center;
+      color: #333;
+      margin-bottom: 2rem;
+    }
+
+    .sidebar h2 img {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      margin-right: 10px;
+    }
+
+    .sidebar button {
+      display: flex;
+      align-items: center;
+      margin-bottom: 1rem;
+      background: none;
+      border: none;
+      padding: 10px 15px;
+      width: 100%;
+      text-align: left;
+      font-size: 1rem;
+      color: #ff6347;
+      cursor: pointer;
+      border-radius: 6px;
+    }
+
+    .sidebar button i {
+      margin-right: 10px;
+    }
+
+    .sidebar button:hover {
+      background-color: #ffddc1;
+    }
+
+    .main-content {
+      width: 80%;
+      padding: 2rem;
+      background-color: #fff;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .header img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+    }
+
+    .transactions-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    .transactions-table th,
+    .transactions-table td {
+      padding: 10px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .transactions-table th {
+      background-color: #f2f2f2;
+      color: #333;
+    }
+
+    .transactions-table td {
+      background-color: #fff;
+    }
+
+    .transactions-table td.amount {
+      color: #ff6347;
+    }
+
+    .add-transaction-btn {
+      background-color: #ff6347;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+
+    .add-transaction-btn:hover {
+      background-color: #e55340;
+    }
+
+    /* Dark Mode Styles */
+    body.dark-mode {
+      background-color: #1e1e1e;
+      color: #e0e0e0;
+    }
+
+    body.dark-mode .sidebar {
+      background-color: #5a4e4e;
+      color: #e55340;
+    }
+
+    body.dark-mode .main-content {
+      background-color: #2e2e2e;
+    }
+
+    body.dark-mode .transactions-table th {
+      background-color: #e93d3d;
+    }
+
+    body.dark-mode .transactions-table td {
+      background-color: #3c3c3c;
+    }
+
+    body.dark-mode .add-transaction-btn {
+      background-color: #f44336;
+    }
+
+    /* Dark/Light Mode Toggle Button */
+    .mode-toggle {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      background-color: #f0f0f0;
+      border: none;
+      padding: 10px;
+      border-radius: 50%;
+      cursor: pointer;
+      box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .mode-toggle img {
+      width: 24px;
+      height: 24px;
+    }
+
+    /* Sign Out Button */
+    .sign-out {
+      position: absolute;
+      bottom: 80px;
+      left: 20px;
+      background-color: #ff6347;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+
+    .sign-out:hover {
+      background-color: #e55340;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <h2><img src="munim.webp" alt="Logo"> Munim</h2>
+    <button onclick="window.location.href='/../Frontend/Dashboard/dashboard.html'"><i class="fas fa-tachometer-alt"></i>Dashboard</button>
+    <button style="background-color:#ffddc1;"><i class="fas fa-exchange-alt"></i>Transactions</button>
+    <button onclick="window.location.href='/../Frontend/wallet/wallet.html'"><i class="fas fa-wallet"></i>Wallet</button>
+    <button onclick="window.location.href='/../Frontend/Goals/Goals.html'"><i class="fas fa-bullseye"></i>Goals</button>
+    <button onclick="window.location.href='/../Frontend/Analytics/analytics.html'"><i class="fas fa-chart-pie"></i>Analytics</button>
+    <button onclick="window.location.href='/../Frontend/Budget/budget.html'"><i class="fas fa-balance-scale"></i>Budget</button>
+    <button onclick="window.location.href='/../Frontend/Setting/setting.html'"><i class="fas fa-cog"></i>Settings</button>
+  </div>
+
+  <!-- Dark/Light Mode Button at Bottom Left -->
+  <button id="darkModeToggle" class="mode-toggle">
+    <img src="dark.png" alt="Dark/Light Mode" width="30px">
+  </button>
+
+  <!-- Sign Out Button at Top Right -->
+  <button id="signOutBtn" class="sign-out">
+    Sign Out
+  </button>
+
+  <div class="main-content">
+    <div class="header">
+        <h1>Welcome, Ashish Singh</h1>
+        <img src="profile.png" alt="Profile Picture">
+    </div>
+    <div>
+      <h3><center>Recent Transactions</center></h3>
+    </div>
+
+    <!-- Add Transaction Button -->
+    <button class="add-transaction-btn" onclick="showAddTransactionForm()">Add Transaction</button>
+
+    <!-- Transactions Table -->
+    <table class="transactions-table" id="transactionsTable">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Date</th>
+          <th>Amount</th>
+          <th>Method</th>
+          <th>Category</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Transactions will be populated here -->
+      </tbody>
+    </table>
+
+    <!-- Add Transaction Form (Hidden Initially) -->
+    <div id="addTransactionForm" style="display:none; margin-top: 30px;">
+      <h2>Add New Transaction</h2>
+      <form id="transactionForm">
+        <label for="transactionName">Transaction Name</label><br>
+        <input type="text" id="transactionName" required><br><br>
+
+        <label for="transactionDate">Transaction Date</label><br>
+        <input type="date" id="transactionDate" required><br><br>
+
+        <label for="transactionAmount">Amount</label><br>
+        <input type="number" id="transactionAmount" required><br><br>
+
+        <label for="transactionMethod">Method</label><br>
+        <select id="transactionMethod" required>
+          <option value="Debit Card">Debit Card</option>
+          <option value="Credit Card">Credit Card</option>
+          <option value="UPI">UPI</option>
+          <option value="Cash">Cash</option>
+        </select><br><br>
+
+        <label for="transactionCategory">Category</label><br>
+        <select id="transactionCategory" required>
+          <option value="Shopping">Shopping</option>
+          <option value="Subscription">Subscription</option>
+          <option value="Education">Education</option>
+          <option value="Rent">Rent</option>
+        </select><br><br>
+
+        <button type="submit" class="add-transaction-btn">Submit Transaction</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Chart.js Library -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    // Sample transaction data (this would usually be fetched from a server)
+    const sampleTransactions = [
+      { "name": "Amazon", "date": "2024-10-03", "amount": 120, "method": "Debit Card", "category": "Shopping" },
+      { "name": "Netflix", "date": "2024-10-04", "amount": 15, "method": "Credit Card", "category": "Subscription" },
+      { "name": "Udemy", "date": "2024-10-05", "amount": 50, "method": "UPI", "category": "Education" },
+      { "name": "Rent Payment", "date": "2024-10-06", "amount": 800, "method": "UPI", "category": "Rent" }
+    ];
+
+    // Function to load transactions into the table
+    function loadTransactions() {
+      const tableBody = document.getElementById('transactionsTable').getElementsByTagName('tbody')[0];
+      tableBody.innerHTML = ""; // Clear existing rows
+
+      sampleTransactions.forEach(transaction => {
+        const row = tableBody.insertRow();
+        row.innerHTML = `
+          <td>${transaction.name}</td>
+          <td>${transaction.date}</td>
+          <td class="amount">$${transaction.amount}</td>
+          <td>${transaction.method}</td>
+          <td>${transaction.category}</td>
+        `;
+      });
+    }
+
+    // Toggle Dark/Light Mode
+    document.getElementById('darkModeToggle').addEventListener('click', function() {
+      document.body.classList.toggle('dark-mode');
+    });
+
+    // Show/Hide Add Transaction Form
+    function showAddTransactionForm() {
+      const form = document.getElementById('addTransactionForm');
+      form.style.display = form.style.display === 'none' ? 'block' : 'none';
+    }
+
+    // Handle form submission
+    document.getElementById('transactionForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+
+      const name = document.getElementById('transactionName').value;
+      const date = document.getElementById('transactionDate').value;
+      const amount = document.getElementById('transactionAmount').value;
+      const method = document.getElementById('transactionMethod').value;
+      const category = document.getElementById('transactionCategory').value;
+
+      // Push new transaction
+      sampleTransactions.push({ name, date, amount: parseFloat(amount), method, category });
+
+      // Reload the transactions table
+      loadTransactions();
+
+      // Hide the form
+      showAddTransactionForm();
+    });
+
+    // Load transactions when the page loads
+    loadTransactions();
+    const signOutBtn = document.getElementById('signOutBtn');
+    signOutBtn.addEventListener('click', () => {
+      // Redirect to the sign-out page (replace with your sign-out logic)
+      window.location.href = '../Login/login.html';
+    });
+  </script>
+</body>
+</html>

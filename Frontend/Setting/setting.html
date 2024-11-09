@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>App Settings</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f7fa;
+      padding: 20px;
+    }
+
+        /* Sidebar */
+        .sidebar {
+      width: 20%;
+      background-color: #FDEAEF;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .sidebar h2 {
+      display: flex;
+      align-items: center;
+      color: #333;
+      margin-bottom: 2rem;
+    }
+
+    .sidebar h2 img {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      margin-right: 10px;
+    }
+
+    .sidebar button {
+      display: flex;
+      align-items: center;
+      margin-bottom: 1rem;
+      background: none;
+      border: none;
+      padding: 10px 15px;
+      width: 100%;
+      text-align: left;
+      font-size: 1rem;
+      color: #ff6347;
+      cursor: pointer;
+      border-radius: 6px;
+    }
+
+    .sidebar button i {
+      margin-right: 10px;
+    }
+
+    .sidebar button:hover {
+      background-color: #ffddc1;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .settings-container {
+      max-width: 500px;
+      margin: 0 auto;
+      background-color: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .setting-item {
+      margin-bottom: 20px;
+    }
+
+    .setting-item label {
+      font-size: 1.1rem;
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    .setting-item select,
+    .setting-item input[type="email"],
+    .setting-item input[type="password"] {
+      width: 100%;
+      padding: 10px;
+      font-size: 1rem;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+    }
+
+    .setting-item input[type="checkbox"] {
+      margin-right: 10px;
+    }
+
+    .setting-item .theme-options {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .theme-options button {
+      padding: 10px 15px;
+      font-size: 1rem;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+
+    .theme-options .light-theme {
+      background-color: #f0f0f0;
+      color: #333;
+    }
+
+    .theme-options .dark-theme {
+      background-color: #333;
+      color: #f0f0f0;
+    }
+
+    .save-button {
+      background-color: #4caf50;
+      color: white;
+      padding: 12px 20px;
+      border: none;
+      font-size: 1.2rem;
+      border-radius: 5px;
+      cursor: pointer;
+      width: 100%;
+    }
+
+    .save-button:hover {
+      background-color: #45a049;
+    }
+
+  </style>
+</head>
+<body>
+
+  <h1>App Settings</h1>
+  <div class="sidebar">
+    <h2><img src="munim.webp" alt="Logo"> Munim</h2>
+    <button style="background-color:#ffddc1;"><i class="fas fa-tachometer-alt"></i>Dashboard</button>
+    <button onclick="window.location.href='/../Frontend/Transactions/Transaction.html'"><i class="fas fa-exchange-alt"></i>Transactions</button>
+    <button onclick="window.location.href='/../Frontend/wallet/wallet.html'"><i class="fas fa-wallet"></i>Wallet</button>
+    <button onclick="window.location.href='/../Frontend/Goals/Goals.html'"><i class="fas fa-bullseye"></i>Goals</button>
+    <button onclick="window.location.href='/../Frontend/Analytics/analytics.html'"><i class="fas fa-chart-pie"></i>Analytics</button>
+    <button onclick="window.location.href='/../Frontend/Budget/budget.html'"><i class="fas fa-balance-scale"></i>Budget</button>
+    <button onclick="window.location.href='/../Frontend/Setting/setting.html'"><i class="fas fa-cog"></i>Settings</button>
+  </div>
+
+  <!-- Dark/Light Mode Button at Bottom Left -->
+  <button id="darkModeToggle" class="mode-toggle">
+    <img src="dark.png" alt="Dark/Light Mode" width="30px">
+  </button>
+
+  <!-- Sign Out Button at Top Right -->
+  <button id="signOutBtn" class="sign-out">
+    Sign Out
+  </button>
+
+  <div class="main-content">
+    <div class="header">
+      <h1>Welcome, Ashish Singh</h1>
+      <img src="profile.png" alt="Profile Picture">
+    </div>
+    <div class="setting-item">
+      <label for="email">Email Notifications</label>
+      <input type="email" id="email" placeholder="Enter your email for reminders" />
+    </div>
+
+    <div class="setting-item">
+      <div class="theme-options">
+        <label for="theme">Choose Theme:</label>
+        <div>
+          <button class="light-theme" id="lightThemeBtn">Light Mode</button>
+          <button class="dark-theme" id="darkThemeBtn">Dark Mode</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="setting-item">
+      <label>
+        <input type="checkbox" id="notificationsEnabled" checked />
+        Enable Email Notifications for Reminders
+      </label>
+    </div>
+
+    <button class="save-button" id="saveSettingsBtn">Save Settings</button>
+  </div>
+
+  <script>
+    // Initialize default settings
+    let currentTheme = 'light'; // Default theme
+    let currency = 'USD'; // Default currency
+    let notificationsEnabled = true; // Default email notifications setting
+
+    // Elements
+    const themeButtons = document.querySelectorAll('.theme-options button');
+    const saveSettingsBtn = document.getElementById('saveSettingsBtn');
+    const currencySelect = document.getElementById('currency');
+    const emailInput = document.getElementById('email');
+    const notificationsCheckbox = document.getElementById('notificationsEnabled');
+    const body = document.body;
+
+    // Set initial state based on default or saved settings
+    function loadSettings() {
+      // Set the currency selection to the current value
+      currencySelect.value = currency;
+
+      // Set the notifications checkbox
+      notificationsCheckbox.checked = notificationsEnabled;
+
+      // Set the email field (mock data for the purpose of this example)
+      emailInput.value = "user@example.com"; // Assuming email is already saved
+
+      // Apply the current theme
+      if (currentTheme === 'dark') {
+        body.classList.add('dark-theme');
+      } else {
+        body.classList.add('light-theme');
+      }
+    }
+
+    // Event listener for theme change
+    themeButtons.forEach(button => {
+      button.addEventListener('click', (e) => {
+        const theme = e.target.id === 'darkThemeBtn' ? 'dark' : 'light';
+        setTheme(theme);
+      });
+    });
+
+    // Set the theme
+    function setTheme(theme) {
+      if (theme === 'dark') {
+        body.classList.remove('light-theme');
+        body.classList.add('dark-theme');
+        currentTheme = 'dark';
+      } else {
+        body.classList.remove('dark-theme');
+        body.classList.add('light-theme');
+        currentTheme = 'light';
+      }
+    }
+
+    // Save settings
+    saveSettingsBtn.addEventListener('click', () => {
+      // Get the currency value
+      currency = currencySelect.value;
+
+      // Get the email input value
+      const email = emailInput.value;
+
+      // Get the notifications setting
+      notificationsEnabled = notificationsCheckbox.checked;
+
+      // Save the settings (mocked, as this could be done via an API in a real app)
+      alert('Settings saved successfully!');
+      console.log('Currency:', currency);
+      console.log('Email:', email);
+      console.log('Notifications Enabled:', notificationsEnabled);
+      console.log('Theme:', currentTheme);
+    });
+
+    // Load initial settings
+    loadSettings();
+  </script>
+
+</body>
+</html>

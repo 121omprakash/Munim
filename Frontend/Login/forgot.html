@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Munim - Forgot Password</title>
+    <link rel="icon" href="https://121omprakash.github.io/UI_UX/munim.png" type="image/png">
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body, html {
+            height: 100%;
+            font-family: 'Arial', sans-serif;
+            color: #333;
+            line-height: 1.6;
+            overflow-x: hidden;
+            background-color: #f4f4f4;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* Hero Section with Money Video Background */
+        .hero {
+            height: 100vh;
+            position: relative;
+            background: linear-gradient(to right, #32c8a7, #2f3e46);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .hero video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.3;
+        }
+
+        .hero h1 {
+            font-size: 3em;
+            font-weight: bold;
+            margin-bottom: 20px;
+            opacity: 0;
+            animation: fadeIn 2s forwards 0.5s;
+        }
+
+        .hero p {
+            font-size: 1.1em;
+            max-width: 600px;
+            margin-bottom: 30px;
+            opacity: 0;
+            animation: fadeIn 2s forwards 1s;
+        }
+
+        /* Forgot Password Form */
+        .forgot-password-container {
+            background-color: white;
+            width: 100%;
+            max-width: 400px;
+            padding: 40px;
+            margin: 50px auto;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            animation: fadeIn 2s forwards 2s;
+        }
+
+        .forgot-password-container h1 {
+            text-align: center;
+            font-size: 2.5em;
+            color: #32c8a7;
+            margin-bottom: 30px;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            font-size: 1em;
+            transition: border 0.3s ease;
+        }
+
+        .input-field:focus {
+            border-color: #32c8a7;
+            outline: none;
+        }
+
+        .reset-button {
+            width: 100%;
+            padding: 15px;
+            background-color: #32c8a7;
+            color: white;
+            font-size: 1.2em;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .reset-button:hover {
+            background-color: #28a095;
+        }
+
+        .back-to-login {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .back-to-login a {
+            color: #32c8a7;
+            font-size: 1em;
+        }
+
+        /* Dark Mode */
+        .dark-mode {
+            background-color: #1c1c1c;
+            color: white;
+        }
+
+        .dark-mode .hero {
+            background: linear-gradient(to right, #2c3e50, #34495e);
+        }
+
+        .dark-mode .reset-button {
+            background-color: #e74c3c;
+        }
+
+        .dark-mode .input-field {
+            border-color: #444;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Responsive Design */
+        @media screen and (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5em;
+            }
+
+            .hero p {
+                font-size: 1em;
+            }
+
+            .forgot-password-container {
+                padding: 20px;
+            }
+
+            .reset-button {
+                padding: 12px;
+                font-size: 1em;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Hero Section with Money Video Background -->
+    <section class="hero">
+        <video autoplay muted loop>
+            <source src="/munim-landing-page/money.mp4" type="video/mp4">
+        </video>
+        <h1>Forgot Your Password?</h1>
+        <p>No worries! Just enter your email and we'll help you reset it.</p>
+    
+    <!-- Forgot Password Form -->
+    <div class="forgot-password-container">
+        <h1>Reset Your Password</h1>
+        <form>
+            <input type="email" class="input-field" placeholder="Enter your email" required>
+            <button type="submit" class="reset-button">Reset Password</button>
+        </form>
+
+        <!-- Back to Login Link -->
+        <div class="back-to-login">
+            <p><a href="login.html">Back to Login</a></p>
+        </div>
+    </div>
+    </section>
+
+    
+
+    <!-- Footer -->
+    <footer class="footer" style="text-align: center; padding: 20px; background-color: #222; color: white;">
+        <p>&copy; 2024 Munim. All rights reserved.</p>
+    </footer>
+
+    <!-- FontAwesome (for social icons) -->
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+
+    <script>
+        // JavaScript function to handle the forgot password form submission
+        document.getElementById('forgot-form').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent form from submitting
+            
+            var email = document.getElementById('email').value;
+
+            // Check if the email is filled
+            if (email !== '') {
+                // Simulate sending a password reset email
+                alert('A password reset link has been sent to ' + email);
+
+                // Redirect to login page after a short delay (to simulate email sending)
+                setTimeout(function() {
+                    window.location.href = 'login.html';
+                }, 2000); // 2-second delay before redirect
+            } else {
+                // Alert the user if the email field is empty
+                alert('Please enter your email address.');
+            }
+        });
+    </script>
+</body>
+</html>

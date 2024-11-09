@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Goals Overview</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Roboto', sans-serif;
+    }
+
+    body {
+      display: flex;
+      min-height: 100vh;
+      background-color: #f5f5f5;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: 20%;
+      background-color: #FDEAEF;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .sidebar h2 {
+      display: flex;
+      align-items: center;
+      color: #333;
+      margin-bottom: 2rem;
+    }
+
+    .sidebar h2 img {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      margin-right: 10px;
+    }
+
+    .sidebar button {
+      display: flex;
+      align-items: center;
+      margin-bottom: 1rem;
+      background: none;
+      border: none;
+      padding: 10px 15px;
+      width: 100%;
+      text-align: left;
+      font-size: 1rem;
+      color: #ff6347;
+      cursor: pointer;
+      border-radius: 6px;
+    }
+
+    .sidebar button i {
+      margin-right: 10px;
+    }
+
+    .sidebar button:hover {
+      background-color: #ffddc1;
+    }
+
+    /* Main Content */
+    .main-content {
+      width: 80%;
+      padding: 2rem;
+      background-color: #fff;
+      overflow: auto;
+    }
+
+    /* Header Section */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+    }
+
+    .header h1 {
+      color: #333;
+    }
+
+    .header img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+    }
+
+    /* Goal Summary Section */
+    .goal-summary {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 2rem;
+    }
+
+    .goal-summary div {
+      background: #ff6347;
+      color: white;
+      padding: 1rem;
+      width: 30%;
+      border-radius: 6px;
+      text-align: center;
+    }
+
+    .goal-summary div h3 {
+      margin-bottom: 10px;
+    }
+
+    .goal-summary div p {
+      font-size: 1.2rem;
+    }
+
+    /* Goal Table */
+    .goal-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    .goal-table th,
+    .goal-table td {
+      padding: 10px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .goal-table th {
+      background-color: #f2f2f2;
+      color: #333;
+    }
+
+    .goal-table td {
+      background-color: #fff;
+    }
+
+    .goal-table td.progress {
+      color: #ff6347;
+    }
+
+    .add-goal-btn {
+      background-color: #ff6347;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+
+    .add-goal-btn:hover {
+      background-color: #e55340;
+    }
+
+    /* Chart.js Section */
+    .chart-container {
+      width: 100%;
+      height: 400px;
+      margin-top: 2rem;
+    }
+
+    /* Dark Mode Styles */
+    body.dark-mode {
+      background-color: #1e1e1e;
+      color: #e0e0e0;
+    }
+
+    body.dark-mode .sidebar {
+      background-color: #5a4e4e;
+      color: #e55340;
+      
+    }
+
+    body.dark-mode .main-content {
+      background-color: #2e2e2e;
+    }
+
+    body.dark-mode .goal-summary div {
+      background-color: #e93d3d;
+    }
+
+    body.dark-mode .goal-table th {
+      background-color: #e93d3d;
+    }
+
+    body.dark-mode .goal-table td {
+      background-color: #3c3c3c;
+    }
+
+    body.dark-mode .add-goal-btn {
+      background-color: #f44336;
+    }
+
+    body.dark-mode .add-goal-btn:hover {
+      background-color: #e53e3e;
+    }
+
+    body.dark-mode .header {
+      color:  white;
+    }
+    /* Dark/Light Mode Toggle Button */
+    .mode-toggle {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      background-color: #f0f0f0;
+      border: none;
+      padding: 10px;
+      border-radius: 50%;
+      cursor: pointer;
+      box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .mode-toggle img {
+      width: 24px;
+      height: 24px;
+    }
+
+    /* Sign Out Button */
+    .sign-out {
+      position: absolute;
+      bottom: 80px;
+      left: 20px;
+      background-color: #ff6347;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+
+    .sign-out:hover {
+      background-color: #e55340;
+    }
+
+    /* Modal for Adding Goal */
+    .modal {
+      display: none; /* Hidden by default */
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+      backdrop-filter: blur(5px); /* Blur effect */
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content {
+      background-color: white;
+      padding: 2rem;
+      width: 400px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .modal-content h3 {
+      margin-bottom: 1.5rem;
+    }
+
+    .modal-content input,
+    .modal-content select,
+    .modal-content button {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 1rem;
+      border-radius: 5px;
+      border: 1px solid #ddd;
+    }
+
+    .modal-content button {
+      background-color: #ff6347;
+      color: white;
+      cursor: pointer;
+    }
+
+    .modal-content button:hover {
+      background-color: #e55340;
+    }
+
+    .close-modal {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <h2><img src="munim.webp" alt="Logo"> Munim</h2>
+    <button onclick="window.location.href='/../Frontend/Dashboard/dashboard.html'"><i class="fas fa-tachometer-alt"></i>Dashboard</button>
+    <button onclick="window.location.href='/../Frontend/transactions/transactions.html'"><i class="fas fa-exchange-alt"></i>Transactions</button>
+    <button onclick="window.location.href='/../Frontend/wallet/wallet.html'"><i class="fas fa-wallet"></i>Wallet</button>
+    <button style="background-color:#ffddc1;" onclick="window.location.href='/../Frontend/Goals/Goals.html'"><i class="fas fa-bullseye"></i>Goals</button>
+    <button onclick="window.location.href='/../Frontend/Analytics/analytics.html'"><i class="fas fa-chart-pie"></i>Analytics</button>
+    <button onclick="window.location.href='/../Frontend/Budget/budget.html'"><i class="fas fa-balance-scale"></i>Budget</button>
+    <button onclick="window.location.href='/../Frontend/Setting/setting.html'"><i class="fas fa-cog"></i>Settings</button>
+  </div>
+
+  <!-- Dark/Light Mode Toggle at Bottom Left -->
+  <button id="darkModeToggle" class="mode-toggle">
+    <img src="dark.png" alt="Toggle Dark/Light Mode">
+  </button>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <!-- Header -->
+    <div class="header">
+      <h1>Goals Overview</h1>
+      <button id="signOutBtn" class="sign-out">Sign Out</button>
+    </div>
+
+    <!-- Goal Summary -->
+    <div class="goal-summary">
+      <div>
+        <h3>Total Goal</h3>
+        <p>$30,000</p>
+      </div>
+      <div>
+        <h3>Achieved</h3>
+        <p>$10,000</p>
+      </div>
+      <div>
+        <h3>Remaining</h3>
+        <p>$20,000</p>
+      </div>
+    </div>
+
+    <!-- Goal Table -->
+    <table class="goal-table">
+      <thead>
+        <tr>
+          <th>Goal</th>
+          <th>Target Amount</th>
+          <th>Achieved Amount</th>
+          <th>Remaining Amount</th>
+          <th>Progress</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Vacation</td>
+          <td>$5000</td>
+          <td>$1500</td>
+          <td>$3500</td>
+          <td class="progress">30%</td>
+        </tr>
+        <tr>
+          <td>New Car</td>
+          <td>$10000</td>
+          <td>$3000</td>
+          <td>$7000</td>
+          <td class="progress">30%</td>
+        </tr>
+        <tr>
+          <td>Emergency Fund</td>
+          <td>$3000</td>
+          <td>$1000</td>
+          <td>$2000</td>
+          <td class="progress">33%</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Add Goal Button -->
+    <button class="add-goal-btn" onclick="showAddGoalForm()">Add Goal</button>
+
+    <!-- Goal Progress Chart -->
+    <div class="chart-container">
+      <canvas id="goalChart"></canvas>
+    </div>
+  </div>
+
+  <!-- Modal for Adding Goal -->
+  <div id="addGoalModal" class="modal">
+    <div class="modal-content">
+      <button class="close-modal" onclick="closeAddGoalForm()">&times;</button>
+      <h3>Add New Goal</h3>
+      <form id="addGoalForm">
+        <label for="goalName">Goal Name</label>
+        <input type="text" id="goalName" name="goalName" required>
+        
+        <label for="targetAmount">Target Amount</label>
+        <input type="number" id="targetAmount" name="targetAmount" required>
+        
+        <label for="completionDate">Completion Date</label>
+        <input type="date" id="completionDate" name="completionDate" required>
+
+        <button type="submit">Add Goal</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    // Dark/Light Mode Toggle Logic
+    const darkModeToggle = document.getElementById('darkModeToggle');
+    darkModeToggle.addEventListener('click', () => {
+      document.body.classList.toggle('dark-mode');
+      const isDarkMode = document.body.classList.contains('dark-mode');
+      darkModeToggle.innerHTML = isDarkMode ? '<img src="light.png" alt="Light Mode" width="30px">' : '<img src="dark.png" alt="Dark Mode" width="30px">';
+    });
+
+    // Sign Out Function
+    document.getElementById('signOutBtn').addEventListener('click', () => {
+      window.location.href = '/logout'; // Adjust this URL for actual logout functionality
+    });
+
+    // Goal Progress Chart Initialization
+    const ctx = document.getElementById('goalChart').getContext('2d');
+    const goalChart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: ['Vacation', 'New Car', 'Emergency Fund'],
+        datasets: [{
+          label: 'Goal Progress',
+          data: [1500, 3000, 1000],
+          backgroundColor: ['#ff6347', '#ffcc00', '#4caf50'],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        responsive: true,
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        },
+        plugins: {
+          legend: {
+            position: 'top',
+          }
+        }
+      }
+    });
+
+    // Function to show the "Add Goal" form (modal)
+    function showAddGoalForm() {
+      document.getElementById('addGoalModal').style.display = 'flex';
+    }
+
+    // Function to close the "Add Goal" form (modal)
+    function closeAddGoalForm() {
+      document.getElementById('addGoalModal').style.display = 'none';
+    }
+  </script>
+
+</body>
+</html>

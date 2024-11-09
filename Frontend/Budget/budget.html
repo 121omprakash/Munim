@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Budget Overview</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Roboto', sans-serif;
+    }
+
+    body {
+      display: flex;
+      min-height: 100vh;
+      background-color: #f5f5f5;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: 20%;
+      background-color: #FDEAEF;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .sidebar h2 {
+      display: flex;
+      align-items: center;
+      color: #333;
+      margin-bottom: 2rem;
+    }
+
+    .sidebar h2 img {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      margin-right: 10px;
+    }
+
+    .sidebar button {
+      display: flex;
+      align-items: center;
+      margin-bottom: 1rem;
+      background: none;
+      border: none;
+      padding: 10px 15px;
+      width: 100%;
+      text-align: left;
+      font-size: 1rem;
+      color: #ff6347;
+      cursor: pointer;
+      border-radius: 6px;
+    }
+
+    .sidebar button i {
+      margin-right: 10px;
+    }
+
+    .sidebar button:hover {
+      background-color: #ffddc1;
+    }
+
+    /* Main Content */
+    .main-content {
+      width: 80%;
+      padding: 2rem;
+      background-color: #fff;
+      overflow: auto;
+    }
+
+    /* Header Section */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+    }
+
+    .header h1 {
+      color: #333;
+    }
+
+    .header img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+    }
+
+    /* Budget Overview Section */
+    .budget-summary {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 2rem;
+    }
+
+    .budget-summary div {
+      background: #ff6347;
+      color: white;
+      padding: 1rem;
+      width: 30%;
+      border-radius: 6px;
+      text-align: center;
+    }
+
+    .budget-summary div h3 {
+      margin-bottom: 10px;
+    }
+
+    .budget-summary div p {
+      font-size: 1.2rem;
+    }
+
+    /* Budget Table */
+    .budget-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    .budget-table th,
+    .budget-table td {
+      padding: 10px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .budget-table th {
+      background-color: #f2f2f2;
+      color: #333;
+    }
+
+    .budget-table td {
+      background-color: #fff;
+    }
+
+    .budget-table td.amount {
+      color: #ff6347;
+    }
+
+    .add-budget-btn {
+      background-color: #ff6347;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+
+    .add-budget-btn:hover {
+      background-color: #e55340;
+    }
+
+    /* Chart.js Section */
+    .chart-container {
+      width: 100%;
+      height: 400px;
+      margin-top: 2rem;
+    }
+
+    /* Dark Mode Styles */
+    body.dark-mode {
+      background-color: #1e1e1e;
+      color: #e0e0e0;
+    }
+
+    body.dark-mode .sidebar {
+      background-color: #5a4e4e;
+      color: #e55340;
+    }
+
+    body.dark-mode .main-content {
+      background-color: #2e2e2e;
+    }
+
+    body.dark-mode .budget-summary div {
+      background-color: #e93d3d;
+    }
+
+    body.dark-mode .budget-table th {
+      background-color: #e93d3d;
+    }
+
+    body.dark-mode .budget-table td {
+      background-color: #3c3c3c;
+    }
+
+    body.dark-mode .add-budget-btn {
+      background-color: #f44336;
+    }
+
+    body.dark-mode .add-budget-btn:hover {
+      background-color: #e53e3e;
+    }
+
+    /* Dark/Light Mode Toggle Button */
+    .mode-toggle {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      background-color: #f0f0f0;
+      border: none;
+      padding: 10px;
+      border-radius: 50%;
+      cursor: pointer;
+      box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .mode-toggle img {
+      width: 24px;
+      height: 24px;
+    }
+
+    /* Sign Out Button */
+    .sign-out {
+      position: absolute;
+      bottom: 80px;
+      left: 20px;
+      background-color: #ff6347;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+
+    .sign-out:hover {
+      background-color: #e55340;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <h2><img src="munim.webp" alt="Logo"> Munim</h2>
+    <button onclick="window.location.href='/../Frontend/Dashboard/dashboard.html'"><i class="fas fa-tachometer-alt"></i>Dashboard</button>
+    <button onclick="window.location.href='/../Frontend/transactions/transactions.html'"><i class="fas fa-exchange-alt"></i>Transactions</button>
+    <button onclick="window.location.href='/../Frontend/wallet/wallet.html'"><i class="fas fa-wallet"></i>Wallet</button>
+    <button onclick="window.location.href='/../Frontend/Goals/Goals.html'"><i class="fas fa-bullseye"></i>Goals</button>
+    <button onclick="window.location.href='/../Frontend/Analytics/analytics.html'"><i class="fas fa-chart-pie"></i>Analytics</button>
+    <button style="background-color:#ffddc1;" onclick="window.location.href='/../Frontend/budget/budget.html'"><i class="fas fa-balance-scale"></i>Budget</button>
+    <button onclick="window.location.href='/../Frontend/Setting/setting.html'"><i class="fas fa-cog"></i>Settings</button>
+  </div>
+
+  <!-- Dark/Light Mode Toggle at Bottom Left -->
+  <button id="darkModeToggle" class="mode-toggle">
+    <img src="dark.png" alt="Dark/Light Mode" width="30px">
+  </button>
+
+  <!-- Sign Out Button at Top Right -->
+  <button id="signOutBtn" class="sign-out">
+    Sign Out
+  </button>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <div class="header">
+      <h1>Budget Overview</h1>
+      <img src="profile.png" alt="Profile Picture">
+    </div>
+
+    <!-- Budget Summary -->
+    <div class="budget-summary">
+      <div>
+        <h3>Total Budget</h3>
+        <p>$5000</p>
+      </div>
+      <div>
+        <h3>Spent</h3>
+        <p>$1200</p>
+      </div>
+      <div>
+        <h3>Remaining</h3>
+        <p>$3800</p>
+      </div>
+    </div>
+
+    <!-- Budget Table -->
+    <table class="budget-table">
+      <thead>
+        <tr>
+          <th>Category</th>
+          <th>Allocated Amount</th>
+          <th>Spent Amount</th>
+          <th>Remaining</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Groceries</td>
+          <td>$500</td>
+          <td>$300</td>
+          <td>$200</td>
+        </tr>
+        <tr>
+          <td>Entertainment</td>
+          <td>$400</td>
+          <td>$100</td>
+          <td>$300</td>
+        </tr>
+        <tr>
+          <td>Rent</td>
+          <td>$1500</td>
+          <td>$1200</td>
+          <td>$300</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Add Budget Button -->
+    <button class="add-budget-btn" onclick="showAddBudgetForm()">Add Budget</button>
+
+    <!-- Chart.js Container -->
+    <div class="chart-container">
+      <canvas id="budgetChart"></canvas>
+    </div>
+
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <script>
+    // Dark/Light Mode Toggle Logic
+    const darkModeToggle = document.getElementById('darkModeToggle');
+    darkModeToggle.addEventListener('click', () => {
+      document.body.classList.toggle('dark-mode');
+      const isDarkMode = document.body.classList.contains('dark-mode');
+      darkModeToggle.innerHTML = isDarkMode ? '<img src="light.png" alt="Light Mode" width="30px">' : '<img src="dark.png" alt="Dark Mode" width="30px">';
+    });
+
+    // Sign Out Function
+    document.getElementById('signOutBtn').addEventListener('click', () => {
+      window.location.href = '/logout'; // Adjust this URL for actual logout functionality
+    });
+
+    // Budget Chart Initialization
+    const ctx = document.getElementById('budgetChart').getContext('2d');
+    const budgetChart = new Chart(ctx, {
+      type: 'pie',
+      data: {
+        labels: ['Groceries', 'Entertainment', 'Rent'],
+        datasets: [{
+          label: 'Budget Allocation',
+          data: [500, 400, 1500],
+          backgroundColor: ['#ff6347', '#ffcc00', '#4caf50'],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: {
+            position: 'top',
+          },
+          tooltip: {
+            callbacks: {
+              label: function(tooltipItem) {
+                return tooltipItem.label + ': $' + tooltipItem.raw;
+              }
+            }
+          }
+        }
+      }
+    });
+    
+    // Function to show the "Add Budget" form (could be modal or inline)
+    function showAddBudgetForm() {
+      alert("Add Budget form would appear here.");
+    }
+  </script>
+
+</body>
+</html>

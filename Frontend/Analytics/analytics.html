@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Analytics - Expense Tracker</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    /* Basic Styles */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Arial', sans-serif;
+    }
+
+    body {
+      display: flex;
+      min-height: 100vh;
+      background-color: #f5f5f5;
+    }
+
+    .sidebar {
+      width: 20%;
+      background-color: #FDEAEF;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .sidebar h2 {
+      display: flex;
+      align-items: center;
+      color: #333;
+      margin-bottom: 2rem;
+    }
+
+    .sidebar h2 img {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      margin-right: 10px;
+    }
+
+    .sidebar button {
+      display: flex;
+      align-items: center;
+      margin-bottom: 1rem;
+      background: none;
+      border: none;
+      padding: 10px 15px;
+      width: 100%;
+      text-align: left;
+      font-size: 1rem;
+      color: #ff6347;
+      cursor: pointer;
+      border-radius: 6px;
+    }
+
+    .sidebar button i {
+      margin-right: 10px;
+    }
+
+    .sidebar button:hover {
+      background-color: #ffddc1;
+    }
+
+    .mode-toggle {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    background-color: #f0f0f0; /* Light background */
+    border: none;
+    padding: 10px;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  .mode-toggle img {
+    width: 24px;
+    height: 24px;
+  }
+
+  /* Sign Out Button */
+  .sign-out {
+    position: absolute;
+    bottom: 80px;
+    left: 20px;
+    background-color: #ff6347; /* Tomato color for sign out */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+
+  .sign-out:hover {
+    background-color: #e55340;
+  }
+
+
+    .main-content {
+      width: 80%;
+      padding: 2rem;
+      background-color: #fff;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+    }
+
+    .header h1 {
+      color: #333;
+    }
+
+    /* Analytics Section */
+    .analytics-header {
+      margin-bottom: 3rem;
+    }
+
+    .chart-container {
+      display: flex;
+      justify-content: space-between;
+      gap: 2rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .chart-container .chart {
+      width: 48%;
+      height: 300px;
+      background-color: #f5f5f5;
+      padding: 1rem;
+      border-radius: 8px;
+    }
+
+    /* Insights Box */
+    .insights {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 3rem;
+    }
+
+    .insight {
+      width: 30%;
+      background-color: #f5f5f5;
+      padding: 1rem;
+      border-radius: 8px;
+      text-align: center;
+    }
+
+    .insight h4 {
+      margin-bottom: 1rem;
+      color: #333;
+    }
+
+    .insight .value {
+      font-size: 1.5rem;
+      color: #ff6347;
+    }
+
+    body.dark-mode {
+    background-color: #1e1e1e; /* Darker background for night mode */
+    color: #e0e0e0;
+    border-radius: 8px; /* Light text color for better contrast */
+  }
+
+  body.dark-mode .sidebar {
+    background-color: #5a4e4e; /* Dark sidebar */
+    color: #e55340;
+    border-radius: 8px;
+  }
+
+  body.dark-mode .sign-out:hover {
+    background-color: #f10808; /* Dark sidebar */
+    color: #0f0f0f;
+    border-radius: 8px;
+  }
+
+  body.dark-mode .main-content {
+    background-color: #2e2e2e; /* Dark main content area */
+  }
+    /* Dark Mode Styling */
+    body.dark-mode {
+      background-color: #1e1e1e;
+      color: #e0e0e0;
+    }
+
+    body.dark-mode .sidebar {
+      background-color: #5a4e4e;
+      color: #e55340;
+    }
+
+    body.dark-mode .main-content {
+      background-color: #2e2e2e;
+    }
+
+    body.dark-mode .chart-container .chart {
+      background-color: #3c3c3c;
+      color: #e0e0e0;
+    }
+
+    body.dark-mode .insight {
+      background-color: #3c3c3c;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="sidebar">
+    <h2><img src="munim.webp" alt="Logo"> Munim</h2>
+    <button onclick="window.location.href='/../Frontend/Dashboard/dashboard.html'"><i class="fas fa-tachometer-alt"></i>Dashboard</button>
+    <button onclick="window.location.href='/../Frontend/Transactions/Transaction.html'"><i class="fas fa-exchange-alt"></i>Transactions</button>
+    <button onclick="window.location.href='/../Frontend/wallet/wallet.html'"><i class="fas fa-wallet"></i>Wallet</button>
+    <button onclick="window.location.href='/../Frontend/Goals/Goals.html'"><i class="fas fa-bullseye"></i>Goals</button>
+    <button style="background-color:#ffddc1;"onclick="window.location.href='/../Frontend/Analytics/analytics.html'"><i class="fas fa-chart-pie"></i>Analytics</button>
+    <button onclick="window.location.href='/../Frontend/Budget/budget.html'"><i class="fas fa-balance-scale"></i>Budget</button>
+    <button onclick="window.location.href='/../Frontend/Setting/setting.html'"><i class="fas fa-cog"></i>Settings</button>
+  </div>
+    <!-- Dark/Light Mode Button at Bottom Left -->
+    <button id="darkModeToggle" class="mode-toggle">
+      <img src="dark.png" alt="Dark/Light Mode" width="30px">
+    </button>
+  
+    <!-- Sign Out Button at Top Right -->
+    <button id="signOutBtn" class="sign-out">
+      Sign Out
+    </button>
+  
+
+  <div class="main-content">
+    <div class="header">
+      <h1>Analytics</h1>
+    </div>
+
+    <div class="analytics-header">
+      <h3>Expense Analytics Overview</h3>
+    </div>
+
+    <div class="chart-container">
+      <!-- Expense Category Breakdown Chart -->
+      <div class="chart">
+        <canvas id="pieChart"></canvas>
+      </div>
+
+      <!-- Monthly Expense Trend -->
+      <div class="chart">
+        <canvas id="lineChart"></canvas>
+      </div>
+    </div>
+
+    <div class="insights">
+      <div class="insight">
+        <h4>Total Expenses</h4>
+        <div class="value">$5,000</div>
+      </div>
+      <div class="insight">
+        <h4>Highest Expense Category</h4>
+        <div class="value">Groceries ($1,500)</div>
+      </div>
+      <div class="insight">
+        <h4>Monthly Average Expense</h4>
+        <div class="value">$400</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Chart.js Library -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    // Pie chart (Expense breakdown by category)
+    const pieCtx = document.getElementById('pieChart').getContext('2d');
+    const pieChart = new Chart(pieCtx, {
+      type: 'pie',
+      data: {
+        labels: ['Groceries', 'Rent', 'Transport', 'Entertainment', 'Other'],
+        datasets: [{
+          data: [30, 40, 10, 15, 5],
+          backgroundColor: ['#00c3ff', '#26e070', '#ff6347', '#e2c72f', '#c49a6c'],
+        }]
+      }
+    });
+
+    // Line chart (Monthly expense trend)
+    const lineCtx = document.getElementById('lineChart').getContext('2d');
+    const lineChart = new Chart(lineCtx, {
+      type: 'line',
+      data: {
+        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
+        datasets: [{
+          label: 'Expenses',
+          data: [500, 600, 700, 750, 800, 650, 850, 900, 950],
+          borderColor: '#ff6347',
+          fill: false,
+        }]
+      }
+    });
+
+    // Dark Mode Toggle
+    const darkModeToggle = document.getElementById('darkModeToggle');
+    darkModeToggle.addEventListener('click', () => {
+      document.body.classList.toggle('dark-mode');
+    });
+
+  </script>
+</body>
+</html>

@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Munim - Expense Tracker</title>
+    <link rel="icon" href="https://121omprakash.github.io/UI_UX/munim.png" type="image/png">
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body, html {
+            height: 100%;
+            font-family: 'Arial', sans-serif;
+            color: #333;
+            line-height: 1.6;
+            overflow-x: hidden;
+            background-color: #f4f4f4;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* Hero Section with Money Video Background */
+        .hero {
+            height: 100vh;
+            position: relative;
+            background: linear-gradient(to right, #32c8a7, #2f3e46);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .hero video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.2;
+        }
+
+        .hero h1 {
+            font-size: 3.5em;
+            font-weight: bold;
+            margin-bottom: 20px;
+            opacity: 0;
+            animation: fadeIn 2s forwards 0.5s;
+        }
+
+        .hero p {
+            font-size: 1.2em;
+            max-width: 600px;
+            margin-bottom: 30px;
+            opacity: 0;
+            animation: fadeIn 2s forwards 1s;
+        }
+
+        .cta-button {
+            background-color: #007bff;
+            color: white;
+            padding: 15px 30px;
+            font-size: 1.2em;
+            border-radius: 30px;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            opacity: 0;
+            animation: fadeIn 2s forwards 1.5s;
+        }
+
+        .cta-button:hover {
+            background-color: #0056b3;
+            transform: scale(1.1);
+        }
+
+        .cta-button:active {
+            background-color: #004080;
+        }
+
+        /* Dark Mode */
+        .dark-mode {
+            background-color: #1c1c1c;
+            color: white;
+        }
+
+        .dark-mode .hero {
+            background: linear-gradient(to right, #2c3e50, #34495e);
+        }
+
+        .dark-mode .cta-button {
+            background-color: #e74c3c;
+        }
+
+        /* Parallax Scroll Effect */
+        .parallax {
+            background: url('https://images.unsplash.com/photo-1581291518852-269cae7c0a0c') no-repeat center center fixed;
+            background-size: cover;
+            height: 500px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: #fff;
+            font-size: 2em;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 80px 20px;
+            background-color: #f9f9f9;
+            text-align: center;
+            opacity: 0;
+            animation: fadeIn 2s forwards 2s;
+        }
+
+        .features h2 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+
+        .features p {
+            font-size: 1.1em;
+            margin-bottom: 40px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 20px;
+            animation: slideIn 1s forwards;
+        }
+
+        .feature-box {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .feature-box:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .feature-box h3 {
+            font-size: 1.6em;
+            margin-bottom: 10px;
+        }
+
+        .feature-box p {
+            font-size: 1em;
+        }
+
+        /* Carousel Container */
+        .carousel-container {
+            max-width: 100%;  /* Ensure full width of container */
+            margin: 50px auto;
+            position: relative;
+            height: 500px; /* Fixed height for the carousel */
+        }
+
+        /* Carousel */
+        .carousel {
+            display: flex;
+            overflow: hidden;
+            width: 100%;
+            height: 100%;  /* Ensures the carousel takes the full container height */
+        }
+
+        /* Individual Slides */
+        .carousel-slide {
+            width: 100%;  /* Ensure each slide takes full width of the container */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Image Styling */
+        .carousel img {
+            width: 100%;  /* Makes sure the image takes up full width */
+            height: 100%;  /* Makes sure the image takes up full height */
+            object-fit: cover;  /* Ensures the image covers the space without distortion */
+        }
+
+        /* Navigation Buttons */
+        .carousel-nav {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: space-between;
+            z-index: 100;
+            width: 100%;
+        }
+
+        .carousel-nav button {
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            padding: 20px;
+            cursor: pointer;
+            font-size: 2em;
+            transition: background-color 0.3s ease;
+        }
+
+        .carousel-nav button:hover {
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+
+
+        /* CTA Section */
+        .cta-section {
+            background-color: #28a745;
+            padding: 40px 20px;
+            color: white;
+            text-align: center;
+            opacity: 0;
+            animation: fadeIn 2s forwards 2.5s;
+        }
+
+        .cta-section h2 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+
+        .cta-section p {
+            font-size: 1.2em;
+            margin-bottom: 20px;
+        }
+
+        .cta-section .cta-button {
+            background-color: #ffffff;
+            color: #28a745;
+            padding: 15px 30px;
+            font-size: 1.2em;
+            border-radius: 30px;
+            border: 2px solid #28a745;
+        }
+
+        .cta-section .cta-button:hover {
+            background-color: #f1f1f1;
+        }
+
+        /* Footer */
+        .footer {
+            background-color: #222;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .footer p {
+            font-size: 1em;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(30px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        /* Responsive Design */
+        @media screen and (max-width: 1024px) {
+            .features-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media screen and (max-width: 768px) {
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero h1 {
+                font-size: 2.5em;
+            }
+
+            .hero p {
+                font-size: 1.1em;
+            }
+
+            .cta-button {
+                padding: 12px 24px;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            .hero h1 {
+                font-size: 2em;
+            }
+
+            .hero p {
+                font-size: 1em;
+            }
+
+            .cta-button {
+                padding: 10px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Hero Section with Money Video Background -->
+    <section class="hero">
+        <video autoplay muted loop>
+            <source src="money.mp4" type="video/mp4">
+        </video>
+        <h1>Welcome to Munim</h1>
+        <p>Your ultimate expense tracker</p>
+        <button class="cta-button" onclick="window.location.href='../Login/login.html'">Login</button>
+        <button class="cta-button" style="margin-top: 15px;" onclick="window.location.href='../Login/register.html'">Create Account</button>
+    </section>
+
+    <!-- Parallax Section -->
+    <section class="parallax">
+        <p style="color: #007bff;">Get control of your finances with Munim</p>
+    </section>
+
+    <!-- Carousel Section for Features -->
+    <section class="carousel-container">
+        <div class="carousel">
+            <div class="carousel-slide">
+                <img src="/Frontend/Image/analytics.jpeg" alt="Dashboard">
+            </div>
+            
+            <div class="carousel-slide">
+                <img src="/Frontend/Image/budget.jpeg" alt="Income and Expenses">
+            </div>
+            <div class="carousel-slide">
+                <img src="/Frontend/Image/expense.jpeg" alt="Income and Expenses">
+            </div>
+        </div>
+        <div class="carousel-nav">
+            <button class="prev" onclick="prevSlide()">❮</button>
+            <button class="next" onclick="nextSlide()">❯</button>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <h2>Key Features</h2>
+        <p>Munim offers a range of powerful features to help you manage your finances effectively</p>
+        <div class="features-grid">
+            <div class="feature-box">
+                <h3>Dashboard</h3>
+                <p>Your finances at a glance. Easily track and manage all your expenses and income.</p>
+            </div>
+            <div class="feature-box">
+                <h3>Category Management</h3>
+                <p>Organize your expenses and income by categories for better financial clarity.</p>
+            </div>
+            <div class="feature-box">
+                <h3>Saving Goals</h3>
+                <p>Set saving goals and track your progress to achieve financial freedom.</p>
+            </div>
+            <div class="feature-box">
+                <h3>All in One Place</h3>
+                <p>Manage all your financial transactions and accounts in one simple app.</p>
+            </div>
+            <div class="feature-box">
+                <h3>Income</h3>
+                <p>Track your income sources and visualize your earnings over time.</p>
+            </div>
+            <div class="feature-box">
+                <h3>Credit & Debit</h3>
+                <p>Keep an eye on your credit and debit transactions for better financial planning.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <h2>Ready to take control of your finances?</h2>
+        <p>Sign up now and start tracking your expenses with Munim!</p>
+        <button class="cta-button" onclick="window.location.href='../Login/register.html'">Get Started</button>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2024 Munim. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Slideshow Navigation
+        let currentSlide = 0;
+
+        function showSlide(index) {
+            const slides = document.querySelectorAll('.carousel-slide');
+            const totalSlides = slides.length;
+
+            if (index >= totalSlides) {
+                currentSlide = 0;
+            } else if (index < 0) {
+                currentSlide = totalSlides - 1;
+            } else {
+                currentSlide = index;
+            }
+
+            const newTransformValue = -currentSlide * 100;
+            document.querySelector('.carousel').style.transform = `translateX(${newTransformValue}%)`;
+        }
+
+        function nextSlide() {
+            showSlide(currentSlide + 1);
+        }
+
+        function prevSlide() {
+            showSlide(currentSlide - 1);
+        }
+
+        // Initialize the carousel
+        showSlide(currentSlide);
+    </script>
+
+</body>
+</html>
