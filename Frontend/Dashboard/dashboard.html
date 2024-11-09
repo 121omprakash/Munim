@@ -170,6 +170,9 @@
     color: #e55340;
     border-radius: 8px;
   }
+  body.dark-mode .sidebar h2 {
+    color:white;
+  }
 
   body.dark-mode .sign-out:hover {
     background-color: #f10808; /* Dark sidebar */
@@ -370,7 +373,7 @@
   <div class="main-content">
     <div class="header">
       <h1>Welcome, Ashish Singh</h1>
-      <img src="profile.png" alt="Profile Picture">
+      <img src="../Image/profile.png" alt="Profile Picture">
     </div>
 
     <div class="summary-cards">
@@ -626,6 +629,7 @@ darkModeToggle.addEventListener('click', () => {
     // Sign Out Button
     const signOutBtn = document.getElementById('signOutBtn');
     signOutBtn.addEventListener('click', () => {
+    alert("You have been Logged Out! ");
       // Redirect to the sign-out page (replace with your sign-out logic)
       window.location.href = '../Login/login.html';
     });

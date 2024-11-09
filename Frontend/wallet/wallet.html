@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Wallet</title>
   <link rel="icon" href="https://121omprakash.github.io/UI_UX/munim.png" type="image/png">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- For Chart.js -->
   <style>
     * {
       box-sizing: border-box;
@@ -128,7 +130,8 @@
       border-collapse: collapse;
     }
 
-    .transactions-table th, .transactions-table td {
+    .transactions-table th,
+    .transactions-table td {
       padding: 10px;
       text-align: left;
       border-bottom: 1px solid #ddd;
@@ -160,7 +163,6 @@
     body.dark-mode .wallet-balance .amount {
       color: #e93d3d;
     }
-
 
     body.dark-mode .transactions-table th {
       background-color: #e93d3d;
@@ -205,15 +207,148 @@
       background-color: #e55340;
     }
 
+    /* Modal for Adding Goal */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(5px);
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content {
+      background-color: white;
+      padding: 2rem;
+      width: 400px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .modal-content h3 {
+      margin-bottom: 1.5rem;
+    }
+
+    .modal-content input,
+    .modal-content select,
+    .modal-content button {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 1rem;
+      border-radius: 5px;
+      border: 1px solid #ddd;
+    }
+
+    .modal-content button {
+      background-color: #ff6347;
+      color: white;
+      cursor: pointer;
+    }
+
+    .modal-content button:hover {
+      background-color: #e55340;
+    }
+
+    .close-modal {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    /* Additional Styling for Transaction Statistics */
+    .stats-section {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 2rem;
+    }
+
+    .stats-card {
+      background-color: #ffddc1;
+      padding: 1.5rem;
+      border-radius: 8px;
+      text-align: center;
+      width: 30%;
+    }
+
+    .stats-card h4 {
+      margin-bottom: 1rem;
+    }
+
+    .stats-card p {
+      font-size: 1.5rem;
+      color: #ff6347;
+    }
+
+    /* Upcoming Bills Section */
+    .bills-section {
+      margin-bottom: 2rem;
+    }
+
+    .bills-section h3 {
+      margin-bottom: 1rem;
+    }
+
+    .bills-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .bills-table th,
+    .bills-table td {
+      padding: 10px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .bills-table th {
+      background-color: #ffddc1;
+    }
+
+    /* Search Bar */
+    .search-bar {
+      margin-bottom: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .search-bar input {
+      width: 75%;
+      padding: 8px;
+      border-radius: 5px;
+      border: 1px solid #ddd;
+    }
+
+    .search-bar button {
+      padding: 8px 12px;
+      background-color: #ff6347;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .search-bar button:hover {
+      background-color: #e55340;
+    }
   </style>
 </head>
+
 <body>
 
   <div class="sidebar">
     <h2><img src="../Image/munim.webp" alt="Logo"> Munim</h2>
     <button onclick="window.location.href='/../Frontend/Dashboard/dashboard.html'"><i class="fas fa-tachometer-alt"></i>Dashboard</button>
     <button onclick="window.location.href='/../Frontend/Transactions/Transaction.html'"><i class="fas fa-exchange-alt"></i>Transactions</button>
-    <button style="background-color:#ffddc1;"" onclick="window.location.href='/../Frontend/wallet/wallet.html'"><i class="fas fa-wallet"></i>Wallet</button>
+    <button style="background-color:#ffddc1;" onclick="window.location.href='/../Frontend/wallet/wallet.html'"><i class="fas fa-wallet"></i>Wallet</button>
     <button onclick="window.location.href='/../Frontend/Goals/Goals.html'"><i class="fas fa-bullseye"></i>Goals</button>
     <button onclick="window.location.href='/../Frontend/Analytics/analytics.html'"><i class="fas fa-chart-pie"></i>Analytics</button>
     <button onclick="window.location.href='/../Frontend/Budget/budget.html'"><i class="fas fa-balance-scale"></i>Budget</button>
@@ -233,7 +368,7 @@
   <div class="main-content">
     <div class="header">
       <h1>Welcome, Ashish Singh</h1>
-      <img src="profile.png" alt="Profile Picture">
+      <img src="../Image/profile.png" alt="Profile Picture">
     </div>
     
     <!-- Wallet Balance Section -->
@@ -242,7 +377,29 @@
         <h3>Current Balance</h3>
         <p class="amount">$5,000</p>
       </div>
-      <button>Deposit Funds</button>
+      <button onclick="showAddGoalForm()">Deposit Funds</button>
+    </div>
+
+    <!-- Transaction Statistics -->
+    <div class="stats-section">
+      <div class="stats-card">
+        <h4>Total Spending</h4>
+        <p>$2,500</p>
+      </div>
+      <div class="stats-card">
+        <h4>Total Income</h4>
+        <p>$4,000</p>
+      </div>
+      <div class="stats-card">
+        <h4>Balance Change</h4>
+        <p>+500</p>
+      </div>
+    </div>
+
+    <!-- Transaction Search Bar -->
+    <div class="search-bar">
+      <input type="text" id="searchInput" placeholder="Search Transactions..." oninput="filterTransactions()">
+      <button onclick="filterTransactions()">Search</button>
     </div>
 
     <!-- Recent Transactions Section -->
@@ -268,76 +425,179 @@
           </tr>
           <tr>
             <td>Netflix</td>
-            <td>02/10/24</td>
+            <td>01/10/24</td>
             <td>$15</td>
             <td>Credit Card</td>
-            <td>Subscription</td>
+            <td>Entertainment</td>
           </tr>
           <tr>
-            <td>Spotify</td>
-            <td>01/10/24</td>
-            <td>$10</td>
-            <td>UPI</td>
-            <td>Subscription</td>
-          </tr>
-          <tr>
-            <td>School Fee</td>
-            <td>30/09/24</td>
-            <td>$200</td>
+            <td>Starbucks</td>
+            <td>28/09/24</td>
+            <td>$5</td>
             <td>Cash</td>
-            <td>Education</td>
-          </tr>
-          <tr>
-            <td>Rent</td>
-            <td>25/09/24</td>
-            <td>$1,000</td>
-            <td>UPI</td>
-            <td>Rent</td>
+            <td>Food</td>
           </tr>
         </tbody>
       </table>
     </div>
+
+    <!-- Upcoming Bills Section -->
+    <div class="bills-section">
+      <h3>Upcoming Bills</h3>
+      <table class="bills-table">
+        <thead>
+          <tr>
+            <th>Bill Name</th>
+            <th>Due Date</th>
+            <th>Amount</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Internet</td>
+            <td>10/10/24</td>
+            <td>$50</td>
+          </tr>
+          <tr>
+            <td>Electricity</td>
+            <td>15/10/24</td>
+            <td>$100</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Modal Overlay -->
+    <div id="addGoalModal" class="modal">
+      <div class="modal-content">
+        <button class="close-modal" onclick="closeAddGoalForm()">&times;</button>
+        <h3>Deposit Fund</h3>
+        <form id="depositForm">
+          <input type="number" id="depositAmount" placeholder="Enter Amount" required />
+          <select id="paymentMethod" required>
+            <option value="">Select Payment Method</option>
+            <option value="creditCard">Credit Card</option>
+            <option value="debitCard">Debit Card</option>
+            <option value="bankTransfer">Bank Transfer</option>
+            <option value="upi">UPI</option>
+          </select>
+          <input type="text" id="accountInfo" placeholder="Account Number (optional)" />
+          <button type="button" onclick="depositFunds()">Deposit</button>
+          <button style="background-color: #bbb;" type="button" onclick="closeModal()">Cancel</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Chart for Transaction Visualization -->
+    <div>
+      <canvas id="transactionChart" width="400" height="200"></canvas>
+    </div>
   </div>
 
-  <!-- Chart.js Library -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-  <!-- Dark/Light Mode Toggle Script -->
   <script>
-        document.getElementById('darkModeToggle').addEventListener('click', function() {
-  // Toggle dark mode class on the body
-  document.body.classList.toggle('dark-mode');
-  
-  // Animate the icon change
-  const icon = document.getElementById('darkModeToggle').querySelector('img');
-  const isDarkMode = document.body.classList.contains('dark-mode');
-  
-  // Change icon smoothly
-  if (isDarkMode) {
-    icon.src = '../Image/light.png'; // Light mode icon
-  } else {
-    icon.src = '../Image/dark.png'; // Dark mode icon
-  }
-  // Wait for the animation duration before resetting
-});
+    const depositBtn = document.getElementById('depositBtn');
+    const depositModal = document.getElementById('depositModal');
+    const body = document.body;
 
-    const darkModeToggle = document.getElementById('darkModeToggle');
-    darkModeToggle.addEventListener('click', () => {
-      document.body.classList.toggle('dark-mode');
+    // Open modal
+    depositBtn.addEventListener('click', () => {
+      depositModal.style.display = 'flex';
+      body.style.filter = 'blur(5px)';
     });
 
-    // Save user preference in localStorage
-    if (localStorage.getItem('dark-mode') === 'enabled') {
-      document.body.classList.add('dark-mode');
+    // Close modal
+    function closeModal() {
+      depositModal.style.display = 'none';
+      body.style.filter = 'none';
     }
 
-    darkModeToggle.addEventListener('click', () => {
+    // Handle deposit
+    function depositFunds() {
+      const depositAmount = document.getElementById('depositAmount').value;
+      if (depositAmount && !isNaN(depositAmount)) {
+        alert(`Deposited $${depositAmount}`);
+        closeModal();
+      } else {
+        alert('Please enter a valid amount');
+      }
+    }
+
+    // Dark/Light Mode Toggle
+    const darkModeToggle = document.getElementById('darkModeToggle');
+    darkModeToggle.addEventListener('click', function () {
+      document.body.classList.toggle('dark-mode');
+      const icon = document.getElementById('darkModeToggle').querySelector('img');
+      const isDarkMode = document.body.classList.contains('dark-mode');
+
+      if (isDarkMode) {
+        icon.src = '../Image/light.png';
+      } else {
+        icon.src = '../Image/dark.png';
+      }
+
       if (document.body.classList.contains('dark-mode')) {
         localStorage.setItem('dark-mode', 'enabled');
       } else {
         localStorage.setItem('dark-mode', 'disabled');
       }
     });
+
+    // Sign Out Button Logic
+    const signOutBtn = document.getElementById('signOutBtn');
+    signOutBtn.addEventListener('click', () => {
+      alert("You have been Logged Out!");
+      window.location.href = '../Login/login.html';
+    });
+
+    // Chart for Transaction Statistics
+    const ctx = document.getElementById('transactionChart').getContext('2d');
+    const transactionChart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: ['Shopping', 'Entertainment', 'Food', 'Bills'],
+        datasets: [{
+          label: 'Amount Spent ($)',
+          data: [120, 15, 5, 50],
+          backgroundColor: ['#ff6347', '#ff6347', '#ff6347', '#ff6347'],
+          borderColor: ['#ff6347', '#ff6347', '#ff6347', '#ff6347'],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        responsive: true,
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+
+    // Transaction Search Filter Logic
+    function filterTransactions() {
+      const searchInput = document.getElementById('searchInput').value.toLowerCase();
+      const rows = document.querySelectorAll('.transactions-table tbody tr');
+
+      rows.forEach(row => {
+        const cells = row.getElementsByTagName('td');
+        let matched = false;
+
+        for (let i = 0; i < cells.length; i++) {
+          if (cells[i].textContent.toLowerCase().includes(searchInput)) {
+            matched = true;
+            break;
+          }
+        }
+
+        if (matched) {
+          row.style.display = '';
+        } else {
+          row.style.display = 'none';
+        }
+      });
+    }
   </script>
+
 </body>
+
 </html>

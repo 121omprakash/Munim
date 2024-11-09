@@ -134,7 +134,9 @@
       background-color: #5a4e4e;
       color: #e55340;
     }
-
+    body.dark-mode .sidebar h2 {
+    color:white;
+  }
     body.dark-mode .main-content {
       background-color: #2e2e2e;
     }
@@ -214,7 +216,7 @@
   <div class="main-content">
     <div class="header">
         <h1>Welcome, Ashish Singh</h1>
-        <img src="profile.png" alt="Profile Picture">
+        <img src="../Image/profile.png" alt="Profile Picture">
     </div>
     <div>
       <h3><center>Recent Transactions</center></h3>
@@ -356,6 +358,7 @@ darkModeToggle.addEventListener('click', () => {
     loadTransactions();
     const signOutBtn = document.getElementById('signOutBtn');
     signOutBtn.addEventListener('click', () => {
+      alert("You have been Logged Out! ");
       // Redirect to the sign-out page (replace with your sign-out logic)
       window.location.href = '../Login/login.html';
     });

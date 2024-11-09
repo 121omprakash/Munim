@@ -114,7 +114,11 @@
       align-items: center;
       margin-bottom: 2rem;
     }
-
+    .header img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+    }
     .header h1 {
       color: #333;
     }
@@ -175,6 +179,9 @@
     color: #e55340;
     border-radius: 8px;
   }
+  body.dark-mode .sidebar h2 {
+    color:white;
+  }
 
   body.dark-mode .sign-out:hover {
     background-color: #f10808; /* Dark sidebar */
@@ -190,7 +197,9 @@
       background-color: #1e1e1e;
       color: #e0e0e0;
     }
-
+    body.dark-mode .header h1 {
+      color:white;
+    }
     body.dark-mode .sidebar {
       background-color: #5a4e4e;
       color: #e55340;
@@ -198,6 +207,7 @@
 
     body.dark-mode .main-content {
       background-color: #2e2e2e;
+      color: white;
     }
 
     body.dark-mode .chart-container .chart {
@@ -207,6 +217,10 @@
 
     body.dark-mode .insight {
       background-color: #3c3c3c;
+      color: white;
+    }
+    body.dark-mode .insight h4 {
+      color: white;
     }
   </style>
 </head>
@@ -236,6 +250,7 @@
   <div class="main-content">
     <div class="header">
       <h1>Analytics</h1>
+      <img src="../Image/profile.png" alt="Profile">
     </div>
 
     <div class="analytics-header">
