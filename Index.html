@@ -31,6 +31,61 @@
             color: inherit;
         }
 
+        /* General Carousel Container Styling */
+.carousel-container {
+    margin-top: 30px;
+    padding: 20px 0;
+    background-color: #f9f9f9;
+}
+
+.carousel-inner {
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Soft shadow for better separation */
+    overflow: hidden; /* Prevents image overflow */
+}
+
+.carousel-item img {
+    width: 10%; /* Ensure images fill the container */
+    height: 500px; /* Adjust carousel height */
+    object-fit: cover; /* Ensures images maintain aspect ratio and fill the space */
+    transition: transform 0.5s ease-in-out; /* Smooth scaling effect */
+}
+
+/* Carousel Item Hover Effects */
+.carousel-item img:hover {
+    transform: scale(1.05); /* Slight zoom effect on hover */
+}
+
+/* Carousel Control Styles (Prev/Next buttons) */
+.carousel-control-prev,
+.carousel-control-next {
+    border-radius: 5%;
+    padding: 10px;
+    transition: background-color 0.3s ease;
+}
+
+
+
+/* Responsive Carousel Adjustments */
+@media (max-width: 1024px) {
+    .carousel-item img {
+        height: 300px; /* Reduce image height on tablets */
+    }
+}
+
+@media (max-width: 768px) {
+    .carousel-item img {
+        height: 250px; /* Further reduce height for mobile devices */
+    }
+}
+
+@media (max-width: 480px) {
+    .carousel-item img {
+        height: 200px; /* Even smaller images for small screens */
+    }
+}
+
+
         /* Hero Section with Money Video Background */
         .hero {
             height: 100vh;
