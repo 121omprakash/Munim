@@ -3,17 +3,25 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>App Settings</title>
+  <title>Settings - Munim</title>
+  <link rel="icon" href="https://121omprakash.github.io/UI_UX/munim.png" type="image/png">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #f4f7fa;
-      padding: 20px;
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Arial', sans-serif;
     }
 
-        /* Sidebar */
-        .sidebar {
-      width: 20%;
+    body {
+      display: flex;
+      min-height: 100vh;
+      background-color: #f5f5f5;
+    }
+
+    .sidebar {
+      width: 19%;
       background-color: #FDEAEF;
       padding: 1.5rem;
       display: flex;
@@ -57,97 +65,216 @@
     .sidebar button:hover {
       background-color: #ffddc1;
     }
-    h1 {
-      text-align: center;
-      margin-bottom: 20px;
+
+    .sidebar button.active {
+      background-color: #ffddc1;
     }
 
-    .settings-container {
-      max-width: 500px;
-      margin: 0 auto;
-      background-color: white;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    .main-content {
+      width: 80%;
+      padding: 2rem;
+      background-color: #fff;
     }
 
-    .setting-item {
-      margin-bottom: 20px;
-    }
-
-    .setting-item label {
-      font-size: 1.1rem;
-      display: block;
-      margin-bottom: 10px;
-    }
-
-    .setting-item select,
-    .setting-item input[type="email"],
-    .setting-item input[type="password"] {
-      width: 100%;
-      padding: 10px;
-      font-size: 1rem;
-      border: 1px solid #ddd;
-      border-radius: 5px;
-    }
-
-    .setting-item input[type="checkbox"] {
-      margin-right: 10px;
-    }
-
-    .setting-item .theme-options {
+    .header {
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
 
-    .theme-options button {
-      padding: 10px 15px;
-      font-size: 1rem;
-      border: none;
-      cursor: pointer;
-      border-radius: 5px;
+    .header img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
     }
 
-    .theme-options .light-theme {
-      background-color: #f0f0f0;
-      color: #333;
+    .settings-section {
+      margin: 2rem 0;
     }
 
-    .theme-options .dark-theme {
-      background-color: #333;
-      color: #f0f0f0;
+    .settings-section h3 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
     }
 
-    .save-button {
-      background-color: #4caf50;
-      color: white;
-      padding: 12px 20px;
-      border: none;
+    .setting-card {
+      background-color: #f5f5f5;
+      padding: 1rem;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+    }
+
+    .setting-card h4 {
+      margin-bottom: 1rem;
       font-size: 1.2rem;
-      border-radius: 5px;
-      cursor: pointer;
-      width: 100%;
     }
 
-    .save-button:hover {
-      background-color: #45a049;
+    .setting-card p {
+      font-size: 1rem;
+    }
+
+    .setting-card button {
+      background-color: #ff6347;
+      color: white;
+      padding: 10px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    .setting-card button:hover {
+      background-color: #e55340;
+    }
+
+    .mode-toggle {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    background-color: #f0f0f0; /* Light background */
+    border: none;
+    padding: 10px;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  .mode-toggle img {
+    width: 24px;
+    height: 24px;
+  }
+
+  /* Sign Out Button */
+  .sign-out {
+    position: absolute;
+    bottom: 80px;
+    left: 20px;
+    background-color: #ff6347; /* Tomato color for sign out */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+
+  .sign-out:hover {
+    background-color: #e55340;
+  }
+
+    /* Dark Mode Styles */
+    body.dark-mode {
+      background-color: #1e1e1e;
+      color: #e0e0e0;
+    }
+
+    body.dark-mode .sidebar {
+      background-color: #5a4e4e;
+      color: #e55340;
+    }
+
+    body.dark-mode .main-content {
+      background-color: #2e2e2e;
+    }
+
+    body.dark-mode .setting-card {
+      background-color: #3c3c3c;
+      color: #e0e0e0;
+    }
+
+    body.dark-mode .sign-out {
+      background-color: #333;
+    }
+
+    /* Modal Form Styles */
+    .form-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      z-index: 1000;
+    }
+
+    .form-modal.open {
+      display: block;
+    }
+
+    .form-modal .modal-content {
+      background-color: white;
+      margin: 10% auto;
+      padding: 2rem;
+      width: 400px;
+      border-radius: 8px;
+      box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-modal input {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 1.5rem;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 1rem;
+    }
+
+    .form-modal select {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 1.5rem;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 1rem;
+    }
+
+    .form-modal button {
+      background-color: #ff6347;
+      color: white;
+      padding: 12px;
+      border: none;
+      border-radius: 6px;
+      width: 100%;
+      cursor: pointer;
+      font-size: 1.1rem;
+      margin-bottom: 1rem;
+    }
+
+    .form-modal button:hover {
+      background-color: #e55340;
+    }
+
+    .form-modal .cancel-btn {
+      background-color: #bbb;
+    }
+
+    .form-modal .cancel-btn:hover {
+      background-color: #999;
+    }
+
+    /* Styling for inputs and buttons */
+    .form-modal .button-container {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .form-modal .button-container button {
+      width: 48%;
     }
 
   </style>
 </head>
 <body>
 
-  <h1>App Settings</h1>
   <div class="sidebar">
-    <h2><img src="munim.webp" alt="Logo"> Munim</h2>
-    <button style="background-color:#ffddc1;"><i class="fas fa-tachometer-alt"></i>Dashboard</button>
+    <h2><img src="../Image/munim.webp" alt="Logo"> Munim</h2>
+    <button  onclick="window.location.href='/../Frontend/Dashboard/dashboard.html'"><i class="fas fa-tachometer-alt"></i>Dashboard</button>
     <button onclick="window.location.href='/../Frontend/Transactions/Transaction.html'"><i class="fas fa-exchange-alt"></i>Transactions</button>
     <button onclick="window.location.href='/../Frontend/wallet/wallet.html'"><i class="fas fa-wallet"></i>Wallet</button>
     <button onclick="window.location.href='/../Frontend/Goals/Goals.html'"><i class="fas fa-bullseye"></i>Goals</button>
     <button onclick="window.location.href='/../Frontend/Analytics/analytics.html'"><i class="fas fa-chart-pie"></i>Analytics</button>
     <button onclick="window.location.href='/../Frontend/Budget/budget.html'"><i class="fas fa-balance-scale"></i>Budget</button>
-    <button onclick="window.location.href='/../Frontend/Setting/setting.html'"><i class="fas fa-cog"></i>Settings</button>
+    <button style="background-color:#ffddc1;" onclick="window.location.href='/../Frontend/Setting/setting.html'"><i class="fas fa-cog"></i>Settings</button>
   </div>
 
   <!-- Dark/Light Mode Button at Bottom Left -->
@@ -155,116 +282,214 @@
     <img src="dark.png" alt="Dark/Light Mode" width="30px">
   </button>
 
-  <!-- Sign Out Button at Top Right -->
+  <!-- Sign Out Button at Top Left -->
   <button id="signOutBtn" class="sign-out">
     Sign Out
   </button>
 
   <div class="main-content">
     <div class="header">
-      <h1>Welcome, Ashish Singh</h1>
-      <img src="profile.png" alt="Profile Picture">
-    </div>
-    <div class="setting-item">
-      <label for="email">Email Notifications</label>
-      <input type="email" id="email" placeholder="Enter your email for reminders" />
+      <h1>Settings</h1>
+      <img src="profile.jpg" alt="Profile Picture">
     </div>
 
-    <div class="setting-item">
-      <div class="theme-options">
-        <label for="theme">Choose Theme:</label>
-        <div>
-          <button class="light-theme" id="lightThemeBtn">Light Mode</button>
-          <button class="dark-theme" id="darkThemeBtn">Dark Mode</button>
-        </div>
+    <div class="settings-section">
+      <h3>Update Profile Information</h3>
+      <div class="setting-card">
+        <h4>Basic Info</h4>
+        <p>Update your name, email, and profile picture.</p>
+        <button onclick="openForm('editProfileForm')">Edit Profile</button>
+      </div>
+      
+      <div class="setting-card">
+        <h4>Finance Tracker Info</h4>
+        <p>Update your financial details.</p>
+        <button onclick="openForm('financeForm')">Edit Finance Info</button>
       </div>
     </div>
 
-    <div class="setting-item">
-      <label>
-        <input type="checkbox" id="notificationsEnabled" checked />
-        Enable Email Notifications for Reminders
-      </label>
+    <div class="settings-section">
+      <h3>Notifications</h3>
+      <div class="setting-card">
+        <h4>Email Notifications</h4>
+        <p>Get updates and alerts via email.</p>
+        <button onclick="openForm('emailNotificationsForm')">Manage Email Notifications</button>
+      </div>
+
+      <div class="setting-card">
+        <h4>SMS Notifications</h4>
+        <p>Get notifications on your phone via SMS.</p>
+        <button onclick="openForm('smsNotificationsForm')">Manage SMS Notifications</button>
+      </div>
     </div>
 
-    <button class="save-button" id="saveSettingsBtn">Save Settings</button>
+    <div class="settings-section">
+      <h3>Account Security</h3>
+      <div class="setting-card">
+        <h4>Two-Factor Authentication</h4>
+        <p>Enable 2FA for additional security on your account.</p>
+        <button onclick="openForm('enable2FAForm')">Enable 2FA</button>
+      </div>
+
+      <div class="setting-card">
+        <h4>Security Questions</h4>
+        <p>Set up security questions to recover your account in case of an emergency.</p>
+        <button onclick="openForm('securityQuestionsForm')">Set Security Questions</button>
+      </div>
+    </div>
+
+    <div class="settings-section">
+      <h3>Language & Region</h3>
+      <div class="setting-card">
+        <h4>Select Language</h4>
+        <p>Choose your preferred language for the app.</p>
+        <button onclick="openForm('languageForm')">Select Language</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Forms Modals -->
+
+  <!-- Edit Profile Form -->
+  <div id="editProfileForm" class="form-modal">
+    <div class="modal-content">
+      <h3>Edit Profile</h3>
+      <input type="text" placeholder="New Username" required>
+      <input type="email" placeholder="New Email" required>
+      <div class="button-container">
+        <button type="submit">Save Changes</button>
+        <button class="cancel-btn" onclick="closeForm('editProfileForm')">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Finance Info Form -->
+  <div id="financeForm" class="form-modal">
+    <div class="modal-content">
+      <h3>Finance Tracker Information</h3>
+      <input type="number" placeholder="Monthly Income" required>
+      <input type="number" placeholder="Total Expenses" required>
+      <input type="text" placeholder="Investment Portfolio" required>
+      <input type="number" placeholder="Debt Amount" required>
+      <div class="button-container">
+        <button type="submit">Save Changes</button>
+        <button class="cancel-btn" onclick="closeForm('financeForm')">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Email Notifications Form -->
+  <div id="emailNotificationsForm" class="form-modal">
+    <div class="modal-content">
+      <h3>Email Notifications</h3>
+      <label for="emailNotifications">Enable Email Notifications</label>
+      <input type="checkbox" id="emailNotifications" checked>
+      <div class="button-container">
+        <button type="submit">Save Changes</button>
+        <button class="cancel-btn" onclick="closeForm('emailNotificationsForm')">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SMS Notifications Form -->
+  <div id="smsNotificationsForm" class="form-modal">
+    <div class="modal-content">
+      <h3>SMS Notifications</h3>
+      <label for="smsNotifications">Enable SMS Notifications</label>
+      <input type="checkbox" id="smsNotifications" checked>
+      <div class="button-container">
+        <button type="submit">Save Changes</button>
+        <button class="cancel-btn" onclick="closeForm('smsNotificationsForm')">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Enable 2FA Form -->
+  <div id="enable2FAForm" class="form-modal">
+    <div class="modal-content">
+      <h3>Enable Two-Factor Authentication</h3>
+      <label for="2fa">Enable 2FA</label>
+      <input type="checkbox" id="2fa" checked>
+      <div class="button-container">
+        <button type="submit">Save Changes</button>
+        <button class="cancel-btn" onclick="closeForm('enable2FAForm')">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Security Questions Form -->
+  <div id="securityQuestionsForm" class="form-modal">
+    <div class="modal-content">
+      <h3>Security Questions</h3>
+      <input type="text" placeholder="Question 1" required>
+      <input type="text" placeholder="Question 2" required>
+      <div class="button-container">
+        <button type="submit">Save Changes</button>
+        <button class="cancel-btn" onclick="closeForm('securityQuestionsForm')">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Language Form -->
+  <div id="languageForm" class="form-modal">
+    <div class="modal-content">
+      <h3>Select Language</h3>
+      <select id="languageSelector">
+        <option value="english">English</option>
+        <option value="spanish">Hingi</option>
+        <option value="spanish">French</option>
+        <option value="spanish">Spanish</option>
+        <option value="spanish">German</option>
+      </select>
+      <div class="button-container">
+        <button type="submit">Save Changes</button>
+        <button class="cancel-btn" onclick="closeForm('languageForm')">Cancel</button>
+      </div>
+    </div>
   </div>
 
   <script>
-    // Initialize default settings
-    let currentTheme = 'light'; // Default theme
-    let currency = 'USD'; // Default currency
-    let notificationsEnabled = true; // Default email notifications setting
-
-    // Elements
-    const themeButtons = document.querySelectorAll('.theme-options button');
-    const saveSettingsBtn = document.getElementById('saveSettingsBtn');
-    const currencySelect = document.getElementById('currency');
-    const emailInput = document.getElementById('email');
-    const notificationsCheckbox = document.getElementById('notificationsEnabled');
-    const body = document.body;
-
-    // Set initial state based on default or saved settings
-    function loadSettings() {
-      // Set the currency selection to the current value
-      currencySelect.value = currency;
-
-      // Set the notifications checkbox
-      notificationsCheckbox.checked = notificationsEnabled;
-
-      // Set the email field (mock data for the purpose of this example)
-      emailInput.value = "user@example.com"; // Assuming email is already saved
-
-      // Apply the current theme
-      if (currentTheme === 'dark') {
-        body.classList.add('dark-theme');
+    // Toggle Dark Mode
+    document.getElementById('darkModeToggle').addEventListener('click', function() {
+  // Toggle dark mode class on the body
+  document.body.classList.toggle('dark-mode');
+  
+  // Animate the icon change
+  const icon = document.getElementById('darkModeToggle').querySelector('img');
+  const isDarkMode = document.body.classList.contains('dark-mode');
+  
+  // Change icon smoothly
+  if (isDarkMode) {
+    icon.src = '../Image/light.png'; // Light mode icon
+  } else {
+    icon.src = '../Image/dark.png'; // Dark mode icon
+  }
+  
+ // Wait for the animation duration before resetting
+});
+darkModeToggle.addEventListener('click', () => {
+      if (document.body.classList.contains('dark-mode')) {
+        localStorage.setItem('dark-mode', 'enabled');
       } else {
-        body.classList.add('light-theme');
+        localStorage.setItem('dark-mode', 'disabled');
       }
-    }
-
-    // Event listener for theme change
-    themeButtons.forEach(button => {
-      button.addEventListener('click', (e) => {
-        const theme = e.target.id === 'darkThemeBtn' ? 'dark' : 'light';
-        setTheme(theme);
-      });
     });
 
-    // Set the theme
-    function setTheme(theme) {
-      if (theme === 'dark') {
-        body.classList.remove('light-theme');
-        body.classList.add('dark-theme');
-        currentTheme = 'dark';
-      } else {
-        body.classList.remove('dark-theme');
-        body.classList.add('light-theme');
-        currentTheme = 'light';
-      }
-    }
-
-    // Save settings
-    saveSettingsBtn.addEventListener('click', () => {
-      // Get the currency value
-      currency = currencySelect.value;
-
-      // Get the email input value
-      const email = emailInput.value;
-
-      // Get the notifications setting
-      notificationsEnabled = notificationsCheckbox.checked;
-
-      // Save the settings (mocked, as this could be done via an API in a real app)
-      alert('Settings saved successfully!');
-      console.log('Currency:', currency);
-      console.log('Email:', email);
-      console.log('Notifications Enabled:', notificationsEnabled);
-      console.log('Theme:', currentTheme);
+    // Sign Out Button
+    document.getElementById('signOutBtn').addEventListener('click', function() {
+      alert('You have been signed out.');
+      window.location.href = '../Login/login.html'; // Redirect to login page
     });
 
-    // Load initial settings
-    loadSettings();
+    // Open the form modal
+    function openForm(formId) {
+      document.getElementById(formId).classList.add('open');
+    }
+
+    // Close the form modal
+    function closeForm(formId) {
+      document.getElementById(formId).classList.remove('open');
+    }
   </script>
 
 </body>

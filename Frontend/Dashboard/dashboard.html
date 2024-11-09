@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Finance Dashboard</title>
+  <link rel="icon" href="https://121omprakash.github.io/UI_UX/munim.png" type="image/png">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
     * {
@@ -112,23 +113,32 @@
       font-size: 1.2rem;
     }
 
-    /* Dark/Light Mode Toggle Button */
-  .mode-toggle {
-    position: fixed;
-    bottom: 20px;
-    left: 20px;
-    background-color: #f0f0f0; /* Light background */
-    border: none;
-    padding: 10px;
-    border-radius: 50%;
-    cursor: pointer;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-  }
+    .mode-toggle {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  background-color: #f0f0f0;
+  border: none;
+  padding: 12px;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease; /* Smooth transition on background and scale */
+  z-index: 1000;
+  transform: scale(1);
+}
 
-  .mode-toggle img {
-    width: 24px;
-    height: 24px;
-  }
+.mode-toggle:hover {
+  transform: scale(1.1); /* Slight scaling effect for hover */
+  background-color: #ff6347; /* Change background on hover for more interactivity */
+}
+
+/* Icon Animation */
+.mode-toggle img {
+  width: 24px;
+  height: 24px;
+  transition: transform 0.3s ease, opacity 0.3s ease; /* Smooth transition for icon change */
+}
 
   /* Sign Out Button */
   .sign-out {
@@ -337,7 +347,7 @@
 <body>
 
   <div class="sidebar">
-    <h2><img src="munim.webp" alt="Logo"> Munim</h2>
+    <h2><img src="../Image/munim.webp" alt="Logo"> Munim</h2>
     <button style="background-color:#ffddc1;"><i class="fas fa-tachometer-alt"></i>Dashboard</button>
     <button onclick="window.location.href='/../Frontend/Transactions/Transaction.html'"><i class="fas fa-exchange-alt"></i>Transactions</button>
     <button onclick="window.location.href='/../Frontend/wallet/wallet.html'"><i class="fas fa-wallet"></i>Wallet</button>
@@ -349,7 +359,7 @@
 
   <!-- Dark/Light Mode Button at Bottom Left -->
   <button id="darkModeToggle" class="mode-toggle">
-    <img src="dark.png" alt="Dark/Light Mode" width="30px">
+    <img src="../Image/dark.png" alt="Dark/Light Mode" width="30px">
   </button>
 
   <!-- Sign Out Button at Top Right -->
@@ -590,24 +600,29 @@ const lineChart = new Chart(line, {
   }
         });
     // Dark/Light Mode Toggle
-    const darkModeToggle = document.getElementById('darkModeToggle');
-    darkModeToggle.addEventListener('click', () => {
-      document.body.classList.toggle('dark-mode');
-    });
-
-    // Optional: Save user preference in localStorage
-    if (localStorage.getItem('dark-mode') === 'enabled') {
-      document.body.classList.add('dark-mode');
-    }
-
-    darkModeToggle.addEventListener('click', () => {
+    document.getElementById('darkModeToggle').addEventListener('click', function() {
+  // Toggle dark mode class on the body
+  document.body.classList.toggle('dark-mode');
+  
+  // Animate the icon change
+  const icon = document.getElementById('darkModeToggle').querySelector('img');
+  const isDarkMode = document.body.classList.contains('dark-mode');
+  
+  // Change icon smoothly
+  if (isDarkMode) {
+    icon.src = '../Image/light.png'; // Light mode icon
+  } else {
+    icon.src = '../Image/dark.png'; // Dark mode icon
+  }
+  
+});
+darkModeToggle.addEventListener('click', () => {
       if (document.body.classList.contains('dark-mode')) {
         localStorage.setItem('dark-mode', 'enabled');
       } else {
         localStorage.setItem('dark-mode', 'disabled');
       }
     });
-
     // Sign Out Button
     const signOutBtn = document.getElementById('signOutBtn');
     signOutBtn.addEventListener('click', () => {

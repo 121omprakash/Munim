@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Analytics - Expense Tracker</title>
+  <link rel="icon" href="https://121omprakash.github.io/UI_UX/munim.png" type="image/png">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
     /* Basic Styles */
@@ -212,7 +213,7 @@
 <body>
 
   <div class="sidebar">
-    <h2><img src="munim.webp" alt="Logo"> Munim</h2>
+    <h2><img src="../Image/munim.webp" alt="Logo"> Munim</h2>
     <button onclick="window.location.href='/../Frontend/Dashboard/dashboard.html'"><i class="fas fa-tachometer-alt"></i>Dashboard</button>
     <button onclick="window.location.href='/../Frontend/Transactions/Transaction.html'"><i class="fas fa-exchange-alt"></i>Transactions</button>
     <button onclick="window.location.href='/../Frontend/wallet/wallet.html'"><i class="fas fa-wallet"></i>Wallet</button>
@@ -301,9 +302,27 @@
     });
 
     // Dark Mode Toggle
-    const darkModeToggle = document.getElementById('darkModeToggle');
-    darkModeToggle.addEventListener('click', () => {
-      document.body.classList.toggle('dark-mode');
+    document.getElementById('darkModeToggle').addEventListener('click', function() {
+  // Toggle dark mode class on the body
+  document.body.classList.toggle('dark-mode');
+  
+  // Animate the icon change
+  const icon = document.getElementById('darkModeToggle').querySelector('img');
+  const isDarkMode = document.body.classList.contains('dark-mode');
+  
+  // Change icon smoothly
+  if (isDarkMode) {
+    icon.src = '../Image/light.png'; // Light mode icon
+  } else {
+    icon.src = '../Image/dark.png'; // Dark mode icon
+  }
+});
+darkModeToggle.addEventListener('click', () => {
+      if (document.body.classList.contains('dark-mode')) {
+        localStorage.setItem('dark-mode', 'enabled');
+      } else {
+        localStorage.setItem('dark-mode', 'disabled');
+      }
     });
 
   </script>
