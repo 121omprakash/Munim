@@ -260,6 +260,66 @@
                 padding: 10px 20px;
             }
         }
+
+        /* Carousel Section Styles */
+.carousel-container {
+    position: relative;
+    margin-top: 30px;
+    background-color: #f9f9f9;
+    padding: 40px 0;
+}
+
+.carousel-inner {
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Adding a subtle shadow */
+    overflow: hidden; /* Ensures images fit within the rounded container */
+}
+
+.carousel-item img {
+    width: 100%; /* Ensures the image covers the container fully */
+    height: 500px; /* Fixed height for consistency */
+    object-fit: cover; /* Ensures aspect ratio of images is maintained */
+    transition: transform 0.5s ease-in-out; /* Smooth transition for hover effects */
+}
+
+/* Hover effect for carousel images */
+.carousel-item img:hover {
+    transform: scale(1.05); /* Zoom effect on hover */
+}
+
+/* Carousel controls (previous and next buttons) */
+.carousel-control-prev,
+.carousel-control-next {
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    border-radius: 50%;
+    padding: 10px;
+    transition: background-color 0.3s ease;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    filter: invert(1); /* Inverts the color of the arrows for better contrast */
+}
+
+/* Hover effect for carousel controls */
+.carousel-control-prev:hover,
+.carousel-control-next:hover {
+    background-color: rgba(0, 0, 0, 0.8); /* Darker background on hover */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .carousel-item img {
+        height: 300px; /* Adjust image height for smaller screens */
+    }
+}
+
+@media (max-width: 480px) {
+    .carousel-item img {
+        height: 250px; /* Further adjust image height for smaller screens */
+    }
+}
+
     </style>
 </head>
 
