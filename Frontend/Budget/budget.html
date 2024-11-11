@@ -29,6 +29,9 @@
       display: flex;
       flex-direction: column;
       align-items: flex-start;
+      position: fixed;
+      height: 100vh;
+      top: 0;
     }
 
     .sidebar h2 {
@@ -73,7 +76,9 @@
       width: 80%;
       padding: 2rem;
       background-color: #fff;
-      overflow: auto;
+      overflow-y: auto;
+      margin-left: 20%;
+      height: 100vh;
     }
 
     /* Header Section */
@@ -106,8 +111,15 @@
       color: white;
       padding: 1rem;
       width: 30%;
-      border-radius: 6px;
+      border-radius: 12px;
       text-align: center;
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .budget-summary div:hover {
+      transform: translateY(-10px);
+      box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2);
     }
 
     .budget-summary div h3 {
@@ -123,20 +135,16 @@
       width: 100%;
       border-collapse: collapse;
       margin-top: 20px;
+      border-radius: 8px;
+      overflow: hidden;
     }
 
     .budget-table th,
     .budget-table td {
-      padding: 10px;
+      padding: 12px;
       text-align: left;
-      border-bottom: 1px solid #ddd;
+      border-radius: 2px;
     }
-
-    .budget-table th {
-      background-color: #f2f2f2;
-      color: #333;
-    }
-
     .budget-table td {
       background-color: #fff;
     }
@@ -145,25 +153,80 @@
       color: #ff6347;
     }
 
+    .budget-table th {
+      background-color: #ffddc1;
+    }
+
+    /* Pie Chart */
+    .chart-container {
+      width: 48%;
+      height: 300px;
+      margin-top: 2rem;
+      margin-right: 2%;
+      display: inline-block;
+    }
+
+    .chart-container canvas {
+      width: 100% !important;
+      height: 100% !important;
+    }
+
+    /* Add Budget Button */
     .add-budget-btn {
-      background-color: #ff6347;
+      background-color: #e78b80;
       color: white;
-      padding: 10px 20px;
+      padding: 12px 25px;
       border: none;
-      border-radius: 5px;
+      border-radius: 8px;
       cursor: pointer;
       margin-top: 20px;
     }
 
     .add-budget-btn:hover {
-      background-color: #e55340;
+      background-color: #ff6347;
+      transition: background-color 0.3s ease;
     }
 
-    /* Chart.js Section */
-    .chart-container {
+    /* Modal Form */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
       width: 100%;
-      height: 400px;
-      margin-top: 2rem;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content {
+      background-color: white;
+      padding: 2rem;
+      border-radius: 8px;
+      width: 400px;
+    }
+
+    .modal input,
+    .modal select {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+
+    .modal button {
+      background-color: #ff6347;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .modal button:hover {
+      background-color: #e55340;
     }
 
     /* Dark Mode Styles */
@@ -176,15 +239,17 @@
       background-color: #5a4e4e;
       color: #e55340;
     }
-    body.dark-mode .sidebar h2{
-      color:white;
+
+    body.dark-mode .sidebar h2 {
+      color: white;
     }
 
     body.dark-mode .main-content {
       background-color: #2e2e2e;
     }
+
     body.dark-mode .main-content h1 {
-      color:white;
+      color: white;
     }
 
     body.dark-mode .budget-summary div {
@@ -271,7 +336,7 @@
   <div class="main-content">
     <div class="header">
       <h1>Budget Overview</h1>
-      <img src="profile.png" alt="Profile Picture">
+      <img src="../Image/profile.png" alt="Profile Picture">
     </div>
 
     <!-- Budget Summary -->
@@ -282,11 +347,11 @@
       </div>
       <div>
         <h3>Spent</h3>
-        <p>$1200</p>
+        <p>$3000</p>
       </div>
       <div>
         <h3>Remaining</h3>
-        <p>$3800</p>
+        <p>$2000</p>
       </div>
     </div>
 
@@ -295,112 +360,151 @@
       <thead>
         <tr>
           <th>Category</th>
-          <th>Allocated Amount</th>
-          <th>Spent Amount</th>
+          <th>Budgeted</th>
+          <th>Spent</th>
           <th>Remaining</th>
         </tr>
       </thead>
       <tbody>
         <tr>
           <td>Groceries</td>
+          <td>$1000</td>
+          <td>$800</td>
+          <td class="amount">$200</td>
+        </tr>
+        <tr>
+          <td>Utilities</td>
           <td>$500</td>
           <td>$300</td>
-          <td>$200</td>
+          <td class="amount">$200</td>
         </tr>
         <tr>
           <td>Entertainment</td>
           <td>$400</td>
-          <td>$100</td>
-          <td>$300</td>
+          <td>$250</td>
+          <td class="amount">$150</td>
         </tr>
         <tr>
-          <td>Rent</td>
-          <td>$1500</td>
-          <td>$1200</td>
-          <td>$300</td>
+          <td>Transportation</td>
+          <td>$600</td>
+          <td>$500</td>
+          <td class="amount">$100</td>
         </tr>
       </tbody>
     </table>
 
-    <!-- Add Budget Button -->
-    <button class="add-budget-btn" onclick="showAddBudgetForm()">Add Budget</button>
-
-    <!-- Chart.js Container -->
+    <!-- Spent Chart -->
     <div class="chart-container">
-      <canvas id="budgetChart"></canvas>
+      <h3><center>Spent Chart</center></h3>
+      <canvas id="spentChart"></canvas>
     </div>
 
+    <!-- Remaining Chart -->
+    <div class="chart-container">
+      <h3><center>Remaining Chart</center></h3>
+      <canvas id="remainingChart"></canvas>
+    </div>
+
+    <!-- Add Budget Button -->
+    <button class="add-budget-btn" onclick="openModal()">Add Budget</button>
   </div>
 
+  <!-- Modal for Adding Budget -->
+  <div id="budgetModal" class="modal">
+    <div class="modal-content">
+      <h2>Create New Budget</h2>
+      <form id="budgetForm">
+        <input type="text" id="category" placeholder="Category" required>
+        <input type="number" id="budgetAmount" placeholder="Amount" required>
+        <input type="date" id="budgetDate" required>
+        <button type="submit">Save Budget</button>
+      </form>
+      <button onclick="closeModal()">Cancel</button>
+    </div>
+  </div>
+
+  <!-- Include Chart.js -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
   <script>
-    // Dark/Light Mode Toggle Logic
-    document.getElementById('darkModeToggle').addEventListener('click', function() {
-  // Toggle dark mode class on the body
-  document.body.classList.toggle('dark-mode');
-  
-  // Animate the icon change
-  const icon = document.getElementById('darkModeToggle').querySelector('img');
-  const isDarkMode = document.body.classList.contains('dark-mode');
-  
-  // Change icon smoothly
-  if (isDarkMode) {
-    icon.src = '../Image/light.png'; // Light mode icon
-  } else {
-    icon.src = '../Image/dark.png'; // Dark mode icon
-  }
-});
-darkModeToggle.addEventListener('click', () => {
-      if (document.body.classList.contains('dark-mode')) {
-        localStorage.setItem('dark-mode', 'enabled');
-      } else {
-        localStorage.setItem('dark-mode', 'disabled');
-      }
-    });
-
-
-    // Sign Out Function
-    document.getElementById('signOutBtn').addEventListener('click', () => {
-      alert("You have been Signed out. ");
-      window.location.href = '../Login/login.html'; // Adjust this URL for actual logout functionality
-    });
-
-    // Budget Chart Initialization
-    const ctx = document.getElementById('budgetChart').getContext('2d');
-    const budgetChart = new Chart(ctx, {
+    // Pie Chart Setup
+    const ctx = document.getElementById('spentChart').getContext('2d');
+    const spentChart = new Chart(ctx, {
       type: 'pie',
       data: {
-        labels: ['Groceries', 'Entertainment', 'Rent'],
+        labels: ['Education', 'Entertainment', 'Bills', 'Shopping', 'Clothing'],
         datasets: [{
-          label: 'Budget Allocation',
-          data: [500, 400, 1500],
-          backgroundColor: ['#ff6347', '#ffcc00', '#4caf50'],
+          data: [30000, 2000, 4000, 10000, 8000],
+          backgroundColor: ['#FF5733', '#33FF57', '#3357FF', '#F5D700', '#9B59B6'],
           borderWidth: 1
         }]
       },
       options: {
-        responsive: true,
-        plugins: {
-          legend: {
-            position: 'top',
-          },
-          tooltip: {
-            callbacks: {
-              label: function(tooltipItem) {
-                return tooltipItem.label + ': $' + tooltipItem.raw;
-              }
-            }
-          }
-        }
+        responsive: true
       }
     });
-    
-    // Function to show the "Add Budget" form (could be modal or inline)
-    function showAddBudgetForm() {
-      alert("Add Budget form would appear here.");
-    }
-  </script>
 
+    const ct = document.getElementById('remainingChart').getContext('2d');
+    const remainingChart = new Chart(ct, {
+      type: 'pie',
+      data: {
+        labels: ['Education', 'Entertainment', 'Bills', 'Shopping', 'Clothing'],
+        datasets: [{
+          data: [1000, 100, 3500, 200, 500],
+          backgroundColor: ['#FF5733', '#33FF57', '#3357FF', '#F5D700', '#9B59B6'],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        responsive: true
+      }
+    });
+
+    // Dark/Light Mode Toggle Logic
+    document.getElementById('darkModeToggle').addEventListener('click', function() {
+      // Toggle dark mode class on the body
+      document.body.classList.toggle('dark-mode');
+      
+      // Animate the icon change
+      const icon = document.getElementById('darkModeToggle').querySelector('img');
+      const isDarkMode = document.body.classList.contains('dark-mode');
+      
+      // Change icon smoothly
+      if (isDarkMode) {
+        icon.src = '../Image/light.png'; // Light mode icon
+      } else {
+        icon.src = '../Image/dark.png'; // Dark mode icon
+      }
+    });
+
+    // Sign Out Function
+    document.getElementById('signOutBtn').addEventListener('click', () => {
+      alert("You have been Signed out.");
+      window.location.href = '../Login/login.html'; // Adjust this URL for actual logout functionality
+    });
+
+    // Open Modal for Adding Budget
+    function openModal() {
+      document.getElementById('budgetModal').style.display = 'flex';
+    }
+
+    // Close Modal for Adding Budget
+    function closeModal() {
+      document.getElementById('budgetModal').style.display = 'none';
+    }
+
+    // Handle Budget Form Submission
+    document.getElementById('budgetForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const category = document.getElementById('category').value;
+      const amount = document.getElementById('budgetAmount').value;
+      const date = document.getElementById('budgetDate').value;
+
+      alert(`Budget Created! \nCategory: ${category} \nAmount: $${amount} \nDate: ${date}`);
+
+      // Close modal after form submission
+      closeModal();
+    });
+  </script>
 </body>
 </html>
